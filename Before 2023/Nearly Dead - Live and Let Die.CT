@@ -1,0 +1,3282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>108896</ID>
+      <Description>"Infinite Mana "</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(mana,GameAssembly.dll,F30F11BBD8000000) //Circle_Object.Cast_Skill
+alloc(newmem,2048,mana)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov [rbx+000000D8],(float)999
+
+exit:
+jmp returnhere
+
+"GameAssembly.dll"+342727:
+jmp newmem
+nop 3
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"GameAssembly.dll"+342727:
+movss [rbx+000000D8],xmm7
+//Alt: db F3 0F 11 BB D8 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>108898</ID>
+      <Description>"Infinite Main Weapon Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"GameAssembly.dll"+44C7AC) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov [rax+74],(int)999
+cmp byte ptr [GameAssembly.dll+15BCC08],00
+
+exit:
+jmp returnhere
+
+"GameAssembly.dll"+44C7AC:
+jmp newmem
+nop 5
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"GameAssembly.dll"+44C7AC:
+dec [rbx+74]
+cmp byte ptr [GameAssembly.dll+15BCC08],00
+//Alt: db FF 4B 74 80 3D 52 04 17 01 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>245</ID>
+      <Description>"Activate  {Click Here For Auto Open Process}"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+{$lua}
+OpenProcess("Nearly Dead - Live and Let Die.exe")
+
+if getCEVersion() &lt; 7.5 then showMessage("If you are getting this message means your Cheat Engine software is outdated. Please update to the latest Cheat Engine version! Latest official public release version can be found at https://cheatengine.org/\nYour Cheat Engine Version : "..getCEVersion().."\nLatest Public Cheat Engine Version : 7.5") --[[MainForm.close()]]
+return end
+
+{$asm}
+
+luacall(function cycleFullCompact(sender,force); local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full view Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible = state; getMainForm().Panel5.Visible = state; end; function addCompactMenu(); if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+luacall(cycleFullCompact(nil,false))
+
+
+
+
+
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>17</Key>
+            <Key>96</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">Process Opened With Compacted View Activated</ActivateSound>
+          <DeactivateSound TTS="EN">Process Opened With Compacted View Deactivated</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>108762</ID>
+          <Description>"One Hit Kill "</Description>
+          <Color>808000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(ohk,GameAssembly.dll,8Bxxxx4533xx448Bxxxx2Bxx33) //Enemy_Object.On_Damage
+alloc(newmem,$1000,ohk)
+alloc(ohkbkp,6)
+registersymbol(ohk)
+registersymbol(ohkbkp)
+label(code)
+label(return)
+
+ohkbkp:
+  readmem(ohk,6)
+
+newmem:
+  mov [rdi+28],0
+
+code:
+  readmem(ohk,6)
+  jmp return
+
+ohk:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+ohk:
+  readmem(ohkbkp,6)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>17</Key>
+                <Key>97</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">One Hit Kill Activated</ActivateSound>
+              <DeactivateSound TTS="EN">One Hit Kill Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>108776</ID>
+          <Description>"Infinite Mana "</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(mana,GameAssembly.dll,F3xxxxxxxxxxxxxx0F2Fxxxx0F97xx84xx74xx488Bxxxxxxxxxx488B) //Circle_Object.Cast_Skill
+alloc(newmem,$1000,mana)
+alloc(manabkp,8)
+registersymbol(mana)
+registersymbol(manabkp)
+label(code)
+label(return)
+
+manabkp:
+  readmem(mana,8)
+
+newmem:
+  mov [rbx+000000D8],(float)999
+
+code:
+  readmem(mana,8)
+  jmp return
+
+mana:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+mana:
+  readmem(manabkp,8)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>17</Key>
+                <Key>98</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">Infinite Mana Activated</ActivateSound>
+              <DeactivateSound TTS="EN">Infinite Mana Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>108894</ID>
+          <Description>"Ammunition"</Description>
+          <Color>808000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>108893</ID>
+              <Description>"Infinite Main Weapon Ammo (Ctrl + Numpad 3)"</Description>
+              <Color>808000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(mainweaponammo,GameAssembly.dll,8Bxxxx4Dxxxx74xx488BxxF3xxxxxxxxxxxxxxxx418Bxxxxxxxxxx4CxxxxxxxxxxxxFFxxxxxxxxxx4885xx74xx4Cxxxx448Bxx8Bxx488Bxx4Dxxxxxxxxxxxx41FF) //Ammo_Count_Manager.Refresh_Ammo_Count
+alloc(newmem,$1000,mainweaponammo)
+alloc(mainweaponammobkp,6)
+registersymbol(mainweaponammo)
+registersymbol(mainweaponammobkp)
+label(code)
+label(return)
+
+mainweaponammobkp:
+  readmem(mainweaponammo,6)
+
+newmem:
+  mov [rax+74],(int)999
+
+code:
+  readmem(mainweaponammo,6)
+  jmp return
+
+mainweaponammo:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+mainweaponammo:
+  readmem(mainweaponammobkp,6)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>17</Key>
+                    <Key>99</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">Infinite Main Weapon Ammo Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">Infinite Main Weapon Ammo Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108759</ID>
+              <Description>"Infinite Special Weapon Ammo (Ctrl + Numpad 4)"</Description>
+              <Color>808000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(ammo,GameAssembly.dll,8Bxxxxxx4533xx488BxxE8xxxxxxxx488Bxxxxxxxxxx488Bxxxxxxxxxx488Bxx4885xx0F84xxxxxxxx4533xx488BxxE8xxxxxxxx488Bxxxxxxxxxx33xx488BxxE8xxxxxxxx4885xx0F84xxxxxxxx4885xx0F84xxxxxxxx4863xxxx3Bxxxx0F83xxxxxxxx83xxxxxxxx75xx33xx488BxxE8xxxxxxxx488B) //Circle_Object.Fire_Weapon
+alloc(newmem,$1000,ammo)
+alloc(ammobkp,7)
+registersymbol(ammo)
+registersymbol(ammobkp)
+label(code)
+label(return)
+
+ammobkp:
+  readmem(ammo,7)
+
+newmem:
+  mov [rdi+rax*4+20],(int)999
+
+code:
+  readmem(ammo,7)
+  jmp return
+
+ammo:
+  jmp newmem
+  nop 2
+return:
+
+[DISABLE]
+
+ammo:
+  readmem(ammobkp,7)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>17</Key>
+                    <Key>100</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">Infinite Special Weapon Ammo Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">Infinite Special Weapon Ammo Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>108891</ID>
+          <Description>"Cooldowns"</Description>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>108775</ID>
+              <Description>"Skills No Cooldown (Ctrl + Numpad 5)"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(skillcd,GameAssembly.dll,F3xxxxxxxxxx488Bxxxxxxxxxx488Bxxxxxxxxxx488Bxx4885) //Circle_Object.Cooltime_Ratio
+alloc(newmem,$1000,skillcd)
+alloc(skillcdbkp,6)
+registersymbol(skillcd)
+registersymbol(skillcdbkp)
+label(code)
+label(return)
+
+skillcdbkp:
+  readmem(skillcd,6)
+
+newmem:
+  mov [rax+rdi*4+20],0
+
+code:
+  readmem(skillcd,6)
+  jmp return
+
+skillcd:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+skillcd:
+  readmem(skillcdbkp,6)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>17</Key>
+                    <Key>101</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">Skills No Cooldown Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">Skills No Cooldown Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108879</ID>
+              <Description>"Dodge No Cooldown (Ctrl + Numpad 6)"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(dashcd,GameAssembly.dll,F3xxxxxxxxxxxxxx0F57xx0F2Fxx0F87xxxxxxxx488Bxxxxxxxxxx4885xx0F84xxxxxxxx33xxE8xxxxxxxx84xx0F85xxxxxxxx488Bxxxxxxxxxx4885xx0F84xxxxxxxxF3xxxxxxxx0F2Fxx0F87xxxxxxxx80xxxxxxxxxxxx75xx80xxxxxxxxxxxx75xx80xxxxxxxxxxxx75xx80xxxxxxxxxxxx0F84xxxxxxxx33xx488BxxE8xxxxxxxx488B) // should be unique
+alloc(newmem,$1000,dashcd)
+alloc(dashcdbkp,8)
+registersymbol(dashcd)
+registersymbol(dashcdbkp)
+label(code)
+label(return)
+
+dashcdbkp:
+  readmem(dashcd,8)
+
+newmem:
+  mov [rbx+000001B8],0
+
+code:
+  readmem(dashcd,8)
+  jmp return
+
+dashcd:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+dashcd:
+  readmem(dashcdbkp,8)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>17</Key>
+                    <Key>102</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">Dodge No Cooldown Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">Dodge No Cooldown Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>108764</ID>
+          <Description>"Player Level Manager "</Description>
+          <Options moHideChildren="1"/>
+          <Color>808000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(traits,GameAssembly.dll,8Bxxxx488BxxFFxx89xxxx488Bxxxx4885xx0F84xxxxxxxx4533) //Player_Level_Manager.Minus_Trait_Point
+alloc(newmem,$1000,traits)
+alloc(data2,8)
+alloc(traitsbkp,6)
+registersymbol(data2)
+registersymbol(traits)
+registersymbol(traitsbkp)
+label(code)
+label(return)
+
+traitsbkp:
+  readmem(traits,6)
+
+newmem:
+  mov [data2],rcx
+
+code:
+  readmem(traits,6)
+  jmp return
+
+traits:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+traits:
+  readmem(traitsbkp,6)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>17</Key>
+                <Key>103</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">Player Level Manager Activated</ActivateSound>
+              <DeactivateSound TTS="EN">Player Level Manager Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>108765</ID>
+              <Description>"Current Trait Points"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>008080</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data2</Address>
+              <Offsets>
+                <Offset>28</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>108890</ID>
+          <Description>"Item Disassemble Manager"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(resource,GameAssembly.dll,8Bxxxx4533xx2Bxxxxxxxxxx66) //Item_Disassemble_Manager.Refresh
+alloc(newmem,$1000,resource)
+alloc(data3,8)
+alloc(resourcebkp,6)
+registersymbol(data3)
+registersymbol(resource)
+registersymbol(resourcebkp)
+label(code)
+label(return)
+
+resourcebkp:
+  readmem(resource,6)
+
+newmem:
+  mov [data3],rdi
+
+code:
+  readmem(resource,6)
+  jmp return
+
+resource:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+resource:
+  readmem(resourcebkp,6)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>17</Key>
+                <Key>104</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">Item Disassemble Manager Activated</ActivateSound>
+              <DeactivateSound TTS="EN">Item Disassemble Manager Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>108881</ID>
+              <Description>"Disassemble Level"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800080</Color>
+              <VariableType>String</VariableType>
+              <Length>128</Length>
+              <Unicode>1</Unicode>
+              <CodePage>0</CodePage>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>data3</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108882</ID>
+              <Description>"Disassemble Experience"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800080</Color>
+              <VariableType>String</VariableType>
+              <Length>128</Length>
+              <Unicode>1</Unicode>
+              <CodePage>0</CodePage>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>data3</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>98</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108887</ID>
+              <Description>"Result Recourse"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800080</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data3</Address>
+              <Offsets>
+                <Offset>28</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108888</ID>
+              <Description>"Crafting Level"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800080</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data3</Address>
+              <Offsets>
+                <Offset>2C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108889</ID>
+              <Description>"Total Resource"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800080</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data3</Address>
+              <Offsets>
+                <Offset>30</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Character"</Description>
+          <Options moHideChildren="1"/>
+          <Color>800000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : Nearly Dead - Live and Let Die.exe
+// Author            : ndck76
+// Executable Version: 2020.3.27.22868
+// Game Version      : Build.10660724 (Early Access)
+// Script Date       : 2023-03-02
+
+[ENABLE]
+
+aobscanmodule(hp1,GameAssembly.dll,66xxxxxxxx0F5Bxx0F5BxxE8xxxxxxxx488B) //Circle_Object.Update
+alloc(newmem,$1000,hp1)
+alloc(data,8)
+alloc(hp1bkp,5)
+registersymbol(data)
+registersymbol(hp1)
+registersymbol(hp1bkp)
+label(code)
+label(return)
+
+hp1bkp:
+  readmem(hp1,5)
+
+newmem:
+  mov [data],rbx
+
+code:
+  readmem(hp1,5)
+  jmp return
+
+hp1:
+  jmp newmem
+return:
+
+[DISABLE]
+
+hp1:
+  readmem(hp1bkp,5)
+
+unregistersymbol(*)
+dealloc(*)
+
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>17</Key>
+                <Key>105</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">Character Activated</ActivateSound>
+              <DeactivateSound TTS="EN">Character Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>14</ID>
+              <Description>"Nickname"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>String</VariableType>
+              <Length>128</Length>
+              <Unicode>1</Unicode>
+              <CodePage>0</CodePage>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>F0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>2</ID>
+              <Description>"Current Health"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>28</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>3</ID>
+              <Description>"Max Health"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>2C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13</ID>
+              <Description>"Mana"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Float</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>5</ID>
+              <Description>"Move Speed"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Float</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>34</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>6</ID>
+              <Description>"Attack Range"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Float</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>38</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>15</ID>
+              <Description>"Crafting Resource"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>158</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>16</ID>
+              <Description>"Moving Skill"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>1A8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>122</ID>
+              <Description>"Dash Cool Timer"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Float</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>1B8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>12</ID>
+              <Description>"Is Sending"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D7</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>11</ID>
+              <Description>"Run"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D6</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10</ID>
+              <Description>"West"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D5</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>9</ID>
+              <Description>"East"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>8</ID>
+              <Description>"South"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D3</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>7</ID>
+              <Description>"North"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>D2</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>4</ID>
+              <Description>"Is Live"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>data</Address>
+              <Offsets>
+                <Offset>30</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>121</ID>
+              <Description>"Character"</Description>
+              <Options moManualExpandCollapse="1"/>
+              <Color>800000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>69</ID>
+                  <Description>"Unlock Cost"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>60</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>70</ID>
+                  <Description>"Now Level"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>80</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>71</ID>
+                  <Description>"Now Experience"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>84</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>72</ID>
+                  <Description>"Max Health"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>A0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>73</ID>
+                  <Description>"Max Health Mulitplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>A4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>74</ID>
+                  <Description>"Skill Acceleration"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>A8</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>75</ID>
+                  <Description>"Skill Energy Consume"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>AC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>76</ID>
+                  <Description>"Staggering Point"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>B0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>77</ID>
+                  <Description>"Staggering Recovery"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>B4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>78</ID>
+                  <Description>"Moving Speed Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>B8</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>79</ID>
+                  <Description>"Moving Speed Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>BC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>80</ID>
+                  <Description>"Melee Mobility Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>C0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>81</ID>
+                  <Description>"Ranged Mobility Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>C4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>82</ID>
+                  <Description>"General Damage Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>C8</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>83</ID>
+                  <Description>"General Damage Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>CC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>84</ID>
+                  <Description>"Melee Damage Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>D0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>85</ID>
+                  <Description>"Ranged Damage Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>D4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>86</ID>
+                  <Description>"General Damage Ratio"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>D8</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>87</ID>
+                  <Description>"Area Size"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>DC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>88</ID>
+                  <Description>"Area Damage Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>E0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>89</ID>
+                  <Description>"Area Damage Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>E4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>90</ID>
+                  <Description>"Shield Melee Ratio"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>E8</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>91</ID>
+                  <Description>"Shield Range Ratio"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>EC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>92</ID>
+                  <Description>"Shield Angle"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>F0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>93</ID>
+                  <Description>"Damage Reduce Ratio General"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>F4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>94</ID>
+                  <Description>"Damage Reduce Ratio Melee"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>F8</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>95</ID>
+                  <Description>"Damage Reduce Ratio Range"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>FC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>96</ID>
+                  <Description>"General Attack Speed"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>100</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>97</ID>
+                  <Description>"Critical"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>104</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>98</ID>
+                  <Description>"Critical Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>108</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>99</ID>
+                  <Description>"Reloading Time"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>10C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>100</ID>
+                  <Description>"Accuracy Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>110</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>101</ID>
+                  <Description>"Melee Hit Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>114</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>102</ID>
+                  <Description>"Projectile Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>103</ID>
+                  <Description>"Projectile Reflection Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>11C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>104</ID>
+                  <Description>"Range Hit Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>120</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105</ID>
+                  <Description>"Ranged Max Range Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>124</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>106</ID>
+                  <Description>"Cushion Range Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>128</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>107</ID>
+                  <Description>"Ammo Capacity Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>12C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>108</ID>
+                  <Description>"Ammo Capacity Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>130</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>109</ID>
+                  <Description>"Ammo Save Chance"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>134</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>110</ID>
+                  <Description>"Noise Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>138</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>112</ID>
+                  <Description>"Staggering"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>148</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>113</ID>
+                  <Description>"Knockback"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>14C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>114</ID>
+                  <Description>"Drone Max Count Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>160</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115</ID>
+                  <Description>"Drone Damage Multiplier"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>164</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116</ID>
+                  <Description>"Drone Duration Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>168</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>117</ID>
+                  <Description>"Accessory Count Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>188</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>118</ID>
+                  <Description>"Inventory Capacity Add"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>18C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119</ID>
+                  <Description>"Starting Weapon"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>190</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>120</ID>
+                  <Description>"Starting Trait Points"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>1B0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>68</ID>
+                  <Description>"Is Male"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>48</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111</ID>
+                  <Description>"Guide Projectile"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[data]+150</Address>
+                  <Offsets>
+                    <Offset>13C</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>27</ID>
+              <Description>"Main Weapon"</Description>
+              <Options moManualExpandCollapse="1"/>
+              <Color>800000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>28</ID>
+                  <Description>"Base Item Data"</Description>
+                  <Color>800000</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>21</ID>
+                      <Description>"Scrap Crafting Resource"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>22</ID>
+                      <Description>"Required Crafting Resource"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>23</ID>
+                      <Description>"Base Stack"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24</ID>
+                      <Description>"Money"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>25</ID>
+                      <Description>"Is Loot Money"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26</ID>
+                      <Description>"Is Stack"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>29</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>67</ID>
+                  <Description>"Weapon Data"</Description>
+                  <Color>800000</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>29</ID>
+                      <Description>"Damage"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>30</ID>
+                      <Description>"Attack Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>31</ID>
+                      <Description>"Critical"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>32</ID>
+                      <Description>"Critical Multiplier"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>33</ID>
+                      <Description>"Accuracy"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>34</ID>
+                      <Description>"Mobility"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>35</ID>
+                      <Description>"Projectile Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>36</ID>
+                      <Description>"Projectile Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>2C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>37</ID>
+                      <Description>"Staggering"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>30</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>38</ID>
+                      <Description>"Knockback"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>34</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>39</ID>
+                      <Description>"Reload Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>40</ID>
+                      <Description>"Projectile Rotation Per Sec"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>3C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>41</ID>
+                      <Description>"Staggering Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>40</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>42</ID>
+                      <Description>"Ammo Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>44</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>43</ID>
+                      <Description>"Pellet Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>48</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>44</ID>
+                      <Description>"Noise Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>4C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>48</ID>
+                      <Description>"Min Attack Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>70</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>47</ID>
+                      <Description>"Max Attack Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>68</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>49</ID>
+                      <Description>"Angle"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>74</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>50</ID>
+                      <Description>"Splash Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>78</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>52</ID>
+                      <Description>"Projectile Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>88</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>53</ID>
+                      <Description>"Min Flying Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>90</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>54</ID>
+                      <Description>"Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>94</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>55</ID>
+                      <Description>"Count Add"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>98</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>56</ID>
+                      <Description>"Reflection Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>9C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>57</ID>
+                      <Description>"Cushion Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>A0</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>59</ID>
+                      <Description>"Projectile Angle"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>B0</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>61</ID>
+                      <Description>"Alert Circle Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>B8</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>62</ID>
+                      <Description>"Projectile Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>80</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>63</ID>
+                      <Description>"Range Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>84</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>65</ID>
+                      <Description>"Projectile Width"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>A8</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>66</ID>
+                      <Description>"Spread Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>AC</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>45</ID>
+                      <Description>"Need Reload"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>50</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>46</ID>
+                      <Description>"Need Target"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>51</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>51</ID>
+                      <Description>"Hit Count Limit"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>7C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>58</ID>
+                      <Description>"Is Guided"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>A4</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>60</ID>
+                      <Description>"Show Alert Circle"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>B4</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>64</ID>
+                      <Description>"Curve"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+118</Address>
+                      <Offsets>
+                        <Offset>8C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108785</ID>
+              <Description>"Special Weapon 1"</Description>
+              <Options moManualExpandCollapse="1"/>
+              <Color>800000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>108786</ID>
+                  <Description>"Base Item Data"</Description>
+                  <Color>800000</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>108787</ID>
+                      <Description>"Scrap Crafting Resource"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108788</ID>
+                      <Description>"Required Crafting Resource"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108789</ID>
+                      <Description>"Base Stack"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108790</ID>
+                      <Description>"Money"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108791</ID>
+                      <Description>"Is Loot Money"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108792</ID>
+                      <Description>"Is Stack"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>29</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>108793</ID>
+                  <Description>"Weapon Data"</Description>
+                  <Color>800000</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>108794</ID>
+                      <Description>"Damage"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108795</ID>
+                      <Description>"Attack Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108796</ID>
+                      <Description>"Critical"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108797</ID>
+                      <Description>"Critical Multiplier"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108798</ID>
+                      <Description>"Accuracy"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108799</ID>
+                      <Description>"Mobility"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108800</ID>
+                      <Description>"Projectile Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108801</ID>
+                      <Description>"Projectile Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>2C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108802</ID>
+                      <Description>"Staggering"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>30</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108803</ID>
+                      <Description>"Knockback"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>34</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108804</ID>
+                      <Description>"Reload Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108805</ID>
+                      <Description>"Projectile Rotation Per Sec"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>3C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108806</ID>
+                      <Description>"Staggering Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>40</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108807</ID>
+                      <Description>"Ammo Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>44</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108808</ID>
+                      <Description>"Pellet Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>48</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108809</ID>
+                      <Description>"Noise Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>4C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108810</ID>
+                      <Description>"Min Attack Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>70</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108811</ID>
+                      <Description>"Max Attack Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>68</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108812</ID>
+                      <Description>"Angle"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>74</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108813</ID>
+                      <Description>"Splash Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>78</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108814</ID>
+                      <Description>"Projectile Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>88</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108815</ID>
+                      <Description>"Min Flying Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>90</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108816</ID>
+                      <Description>"Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>94</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108817</ID>
+                      <Description>"Count Add"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>98</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108818</ID>
+                      <Description>"Reflection Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>9C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108819</ID>
+                      <Description>"Cushion Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>A0</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108820</ID>
+                      <Description>"Projectile Angle"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>B0</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108821</ID>
+                      <Description>"Alert Circle Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>B8</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108822</ID>
+                      <Description>"Projectile Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>80</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108823</ID>
+                      <Description>"Range Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>84</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108824</ID>
+                      <Description>"Projectile Width"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>A8</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108825</ID>
+                      <Description>"Spread Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>AC</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108826</ID>
+                      <Description>"Need Reload"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>50</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108827</ID>
+                      <Description>"Need Target"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>51</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108828</ID>
+                      <Description>"Hit Count Limit"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>7C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108829</ID>
+                      <Description>"Is Guided"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>A4</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108830</ID>
+                      <Description>"Show Alert Circle"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>B4</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108831</ID>
+                      <Description>"Curve"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+128</Address>
+                      <Offsets>
+                        <Offset>8C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108832</ID>
+              <Description>"Special Weapon 2"</Description>
+              <Options moManualExpandCollapse="1"/>
+              <Color>800000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>108833</ID>
+                  <Description>"Base Item Data"</Description>
+                  <Color>800000</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>108834</ID>
+                      <Description>"Scrap Crafting Resource"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108835</ID>
+                      <Description>"Required Crafting Resource"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108836</ID>
+                      <Description>"Base Stack"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108837</ID>
+                      <Description>"Money"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108838</ID>
+                      <Description>"Is Loot Money"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108839</ID>
+                      <Description>"Is Stack"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>29</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>108840</ID>
+                  <Description>"Weapon Data"</Description>
+                  <Color>800000</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>108841</ID>
+                      <Description>"Damage"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108842</ID>
+                      <Description>"Attack Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108843</ID>
+                      <Description>"Critical"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108844</ID>
+                      <Description>"Critical Multiplier"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108845</ID>
+                      <Description>"Accuracy"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108846</ID>
+                      <Description>"Mobility"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108847</ID>
+                      <Description>"Projectile Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108848</ID>
+                      <Description>"Projectile Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>2C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108849</ID>
+                      <Description>"Staggering"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>30</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108850</ID>
+                      <Description>"Knockback"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>34</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108851</ID>
+                      <Description>"Reload Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108852</ID>
+                      <Description>"Projectile Rotation Per Sec"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>3C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108853</ID>
+                      <Description>"Staggering Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>40</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108854</ID>
+                      <Description>"Ammo Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>44</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108855</ID>
+                      <Description>"Pellet Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>48</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108856</ID>
+                      <Description>"Noise Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>4C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108857</ID>
+                      <Description>"Min Attack Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>70</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108858</ID>
+                      <Description>"Max Attack Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>68</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108859</ID>
+                      <Description>"Angle"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>74</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108860</ID>
+                      <Description>"Splash Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>78</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108861</ID>
+                      <Description>"Projectile Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>88</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108862</ID>
+                      <Description>"Min Flying Time"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>90</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108863</ID>
+                      <Description>"Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>94</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108864</ID>
+                      <Description>"Count Add"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>98</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108865</ID>
+                      <Description>"Reflection Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>9C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108866</ID>
+                      <Description>"Cushion Range"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>A0</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108867</ID>
+                      <Description>"Projectile Angle"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>B0</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108868</ID>
+                      <Description>"Alert Circle Radius"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>B8</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108869</ID>
+                      <Description>"Projectile Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>80</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108870</ID>
+                      <Description>"Range Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>84</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108871</ID>
+                      <Description>"Projectile Width"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>A8</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108872</ID>
+                      <Description>"Spread Type"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>AC</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108873</ID>
+                      <Description>"Need Reload"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>50</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108874</ID>
+                      <Description>"Need Target"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>51</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108875</ID>
+                      <Description>"Hit Count Limit"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>7C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108876</ID>
+                      <Description>"Is Guided"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>A4</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108877</ID>
+                      <Description>"Show Alert Circle"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>B4</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>108878</ID>
+                      <Description>"Curve"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:True/Unlocked/Enabled
+0:False/Locked/Disabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>800000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[data]+130</Address>
+                      <Offsets>
+                        <Offset>8C</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,3029 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>105603</ID>
+      <Description>"[ Activate ] - {Click here to add process automatically} - [ EA v0.5.5 ]"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+{$lua}
+OpenProcess("ShogunShowdown.exe")
+if (LaunchMonoDataCollector())==0
+then error ('Failure To Launch')
+end
+
+if getCEVersion() &lt; 7.4 then showMessage("If you are getting this message means your Cheat Engine software is outdated. Please update to the latest Cheat Engine version! Latest official public release version can be found at https://cheatengine.org/\nYour Cheat Engine Version : "..getCEVersion().."\nLatest Public Cheat Engine Version : 7.4") --[[MainForm.close()]]
+return end
+
+{$asm}
+
+luacall(function cycleFullCompact(sender,force); local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full view Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible = state; getMainForm().Panel5.Visible = state; end; function addCompactMenu(); if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+luacall(cycleFullCompact(nil,false))
+
+
+
+
+
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>105604</ID>
+          <Description>"+++ SCRIPT +++ "</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105605</ID>
+              <Description>"Minim Upgrade Price Pay Tile"</Description>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version:
+  Date   : 2023-06-28
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+alloc(newmem,2048,Price:Pay+78) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+mov dword ptr [rsi+60],1            //ValuePay
+
+originalcode:
+movsxd  rax,dword ptr [rsi+60]
+sub ecx,eax
+
+exit:
+jmp returnhere
+
+Price:Pay+78:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+Price:Pay+78:
+movsxd  rax,dword ptr [rsi+60]
+sub ecx,eax
+//Alt: db 48 63 46 60 2B C8
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105606</ID>
+              <Description>"Game Data"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version:
+  Date   : 2023-06-28
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+if process and readInteger(process) ~= 0 then
+    mono_initialize()
+    LaunchMonoDataCollector()
+else
+    local msg = 'No process detected.'
+    print(msg)
+    error(msg)
+end
+
+function getImageId(assembly_name)
+    local assemblies = mono_enumAssemblies()
+
+    for i=1, #assemblies do
+        local imageid = mono_getImageFromAssembly(assemblies[i])
+        local image_name = mono_image_get_name(imageid)
+
+        if (image_name == assembly_name) then
+            return imageid
+        end
+    end
+
+    return 0
+end
+
+function getClass(imageid, ns, name)
+    local classes = mono_image_enumClasses(imageid)
+
+    for i, _ in ipairs(classes) do
+        local _class = classes[i]
+
+        if (ns == _class.namespace) and (name == _class.classname) then
+            return _class
+        end
+    end
+
+    print(string.format("Couldn't find class: %s %s", ns, name))
+    return nil
+end
+
+function getMethod(_class, methodname)
+    local methods = mono_class_enumMethods(_class.class)
+
+    for i, _ in ipairs(methods) do
+        local _method = methods[i]
+
+        if (methodname == _method.name) then
+            return _method
+        end
+    end
+
+    print(string.format("Couldn't find method: %s", methodname))
+    return nil
+end
+
+function printClasses(imageid)
+    print("===CLASSES===")
+    local classes = mono_image_enumClasses(imageid)
+
+    for i, _ in ipairs(classes) do
+        local _class = classes[i]
+        local _namespace = _class.namespace
+        local _name = _class.classname
+
+        print(string.format("NS: %s,NAME: %s", _namespace, _name))
+    end
+    print("===CLASSES===")
+end
+
+function printMethods(_class)
+    print("Methods")
+    local ns = _class.namespace
+    local classname = _class.classname
+
+    local methods = mono_class_enumMethods(_class.class)
+
+    for i, _ in ipairs(methods) do
+        local _method = methods[i]
+
+        print(string.format("%s %s %s", ns, classname, _method.name))
+    end
+end
+
+{$asm}
+globalalloc(GlobalsStaticFields, 8)
+GlobalsStaticFields:
+dq 0
+
+[DISABLE]
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105607</ID>
+                  <Description>"Active This Too"</Description>
+                  <Color>800000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version:
+  Date   : 2023-06-28
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+local imageid = getImageId("Assembly-CSharp")
+local Globals = getClass(imageid, "", "Globals")
+local _static = mono_class_getStaticFieldAddress("", Globals.class)
+writeQword("GlobalsStaticFields", _static)
+{$asm}
+
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105295</ID>
+              <Description>"Hero Data"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version:
+  Date   : 2023-06-28
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(pData_HeroData,CombatManager:Update,CombatManager:Update+150,48 8B 40 28 48 63 40 18) // should be unique
+alloc(newmem,$1000,pData_HeroData)
+
+alloc(pBase_HeroData,8)
+registersymbol(pBase_HeroData)
+
+label(code)
+label(return)
+
+pBase_HeroData:
+dd
+
+newmem:
+
+code:
+  mov [pBase_HeroData],rax
+  mov rax,[rax+28]
+  movsxd  rax,dword ptr [rax+18]
+  jmp return
+
+pData_HeroData:
+  jmp newmem
+  nop 3
+return:
+registersymbol(pData_HeroData pBase_HeroData)
+
+[DISABLE]
+
+pData_HeroData:
+  db 48 8B 40 28 48 63 40 18
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105608</ID>
+              <Description>"Hero Data"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version: 
+  Date   : 2023-07-01
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(pData_HeroData,CombatManager:Update,CombatManager:Update+150,48 63 40 18 85 C0 7E 0E) // should be unique
+alloc(newmem,$1000,pData_HeroData)
+
+alloc(pBase_HeroData,8)
+registersymbol(pBase_HeroData)
+
+label(code)
+label(return)
+
+pBase_HeroData:
+dd
+
+newmem:
+  mov [pBase_HeroData],rax
+code:
+  movsxd  rax,dword ptr [rax+18]
+  test eax,eax
+  jmp return
+
+pData_HeroData:
+  jmp newmem
+  nop
+return:
+registersymbol(pData_HeroData)
+
+[DISABLE]
+
+pData_HeroData:
+  db 48 63 40 18 85 C0
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: CombatManager:Update+5b
+
+CombatManager:Update+2f: 33 C0                          - xor eax,eax
+CombatManager:Update+31: 48 0F B6 F8                    - movzx rdi,al
+CombatManager:Update+35: 45 33 FF                       - xor r15d,r15d
+CombatManager:Update+38: 48 B8 98 6E C7 38 F7 01 00 00  - mov rax,000001F738C76E98
+CombatManager:Update+42: 48 8B 00                       - mov rax,[rax]
+CombatManager:Update+45: 48 8B C8                       - mov rcx,rax
+CombatManager:Update+48: 83 38 00                       - cmp dword ptr [rax],00
+CombatManager:Update+4b: 66 66 90                       - nop 3
+CombatManager:Update+4e: 49 BB 20 DC 53 D3 F8 01 00 00  - mov r11,Agent:get_AgentStats
+CombatManager:Update+58: 41 FF D3                       - call r11
+// ---------- INJECTING HERE ----------
+CombatManager:Update+5b: 48 63 40 18                    - movsxd  rax,dword ptr [rax+18]
+// ---------- DONE INJECTING  ----------
+CombatManager:Update+5f: 85 C0                          - test eax,eax
+CombatManager:Update+61: 7E 0E                          - jle CombatManager:Update+71
+CombatManager:Update+63: B8 01 00 00 00                 - mov eax,00000001
+CombatManager:Update+68: 48 0F B6 F8                    - movzx rdi,al
+CombatManager:Update+6c: 45 33 FF                       - xor r15d,r15d
+CombatManager:Update+6f: EB 17                          - jmp CombatManager:Update+88
+CombatManager:Update+71: 0F B6 46 30                    - movzx eax,byte ptr [rsi+30]
+CombatManager:Update+75: 85 C0                          - test eax,eax
+CombatManager:Update+77: 74 0F                          - je CombatManager:Update+88
+CombatManager:Update+79: B8 01 00 00 00                 - mov eax,00000001
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105380</ID>
+              <Description>"Combat Data"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version:
+  Date   : 2023-06-28
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(pData_CombatData,CombatManager:Update,CombatManager:Update+150,0F B6 46 31 85 C0 0F) // should be unique
+alloc(newmem,$1000,pData_CombatData)
+
+alloc(pBase_CombatData,8)
+registersymbol(pBase_CombatData)
+
+label(code)
+label(return)
+
+pBase_CombatData:
+dd
+
+newmem:
+
+code:
+  mov [pBase_CombatData],rsi
+  movzx eax,byte ptr [rsi+31]
+  test eax,eax
+  jmp return
+
+pData_CombatData:
+  jmp newmem
+  nop
+return:
+registersymbol(pData_CombatData pBase_CombatData)
+
+[DISABLE]
+
+pData_CombatData:
+  db 0F B6 46 31 85 C0
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105331</ID>
+              <Description>"Tiles Data"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version: 
+  Date   : 2023-06-28
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(pData_TilesData,TilesManager:Update,TilesManager:Update+300,0F B6 46 40 85 C0 0F 84) // should be unique
+alloc(newmem,$1000,pData_TilesData)
+
+alloc(pBase_TilesData,8)
+registersymbol(pBase_TilesData)
+
+label(code)
+label(return)
+
+pBase_TilesData:
+dd
+
+newmem:
+
+code:
+  mov [pBase_TilesData],rsi
+  movzx eax,byte ptr [rsi+40]
+  test eax,eax
+  jmp return
+
+pData_TilesData:
+  jmp newmem
+  nop
+return:
+registersymbol(pData_TilesData pBase_TilesData)
+
+[DISABLE]
+
+pData_TilesData:
+  db 0F B6 46 40 85 C0
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104292</ID>
+          <Description>"+++ POINTER +++"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF8000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105609</ID>
+              <Description>"Game Data"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105610</ID>
+                  <Description>"Globals Data"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105611</ID>
+                      <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>C0C0C0</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105612</ID>
+                      <Description>"Developer?"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>808000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105613</ID>
+                      <Description>"Allow Full Unlock In Title Screen?"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>808000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>7</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105614</ID>
+                      <Description>"Day"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105615</ID>
+                      <Description>"Currently Implemented Max Day"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105616</ID>
+                      <Description>"Coins"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>34</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105617</ID>
+                      <Description>"Max Coins"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105618</ID>
+                      <Description>"Kill Count"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>GlobalsStaticFields</Address>
+                      <Offsets>
+                        <Offset>3C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105296</ID>
+              <Description>"Hero Data"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105297</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[pBase_HeroData]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105299</ID>
+                  <Description>"Tecnical Name"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>4080FF</Color>
+                  <VariableType>String</VariableType>
+                  <Length>128</Length>
+                  <Unicode>1</Unicode>
+                  <CodePage>0</CodePage>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>[pBase_HeroData]+100</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105315</ID>
+                  <Description>"Move Distance"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[pBase_HeroData]+AC</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105321</ID>
+                  <Description>"Special Move Damage"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[pBase_HeroData]+F8</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105316</ID>
+                  <Description>"Crit Chance"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pBase_HeroData]+B0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105317</ID>
+                  <Description>"Luck"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pBase_HeroData]+F0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105318</ID>
+                  <Description>"Can Use Special Move?"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_HeroData]+F4</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105319</ID>
+                  <Description>"Unlocked?"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_HeroData]+F5</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105320</ID>
+                  <Description>"Combo Kill Recharges Tiles?"</Description>
+                  <DropDownListLink>Unlocked?</DropDownListLink>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_HeroData]+F6</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105322</ID>
+                  <Description>"Special Move Backwards?"</Description>
+                  <DropDownListLink>Unlocked?</DropDownListLink>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_HeroData]+FC</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105323</ID>
+                  <Description>"Special Move Flips?"</Description>
+                  <DropDownListLink>Unlocked?</DropDownListLink>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_HeroData]+FD</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105308</ID>
+                  <Description>"- Agent Stats"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105309</ID>
+                      <Description>"Max HP"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_HeroData]+28</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105314</ID>
+                      <Description>"Hp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_HeroData]+28</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105310</ID>
+                      <Description>"Ice"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_HeroData]+28</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105311</ID>
+                      <Description>"Poison"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_HeroData]+28</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105312</ID>
+                      <Description>"Shield?"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>808000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[pBase_HeroData]+28</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105313</ID>
+                      <Description>"Mark?"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>808000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[pBase_HeroData]+28</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105324</ID>
+                  <Description>"- Special Move Cooldown"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105326</ID>
+                      <Description>"Cooldown"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_HeroData]+D8</Address>
+                      <Offsets>
+                        <Offset>3C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105327</ID>
+                      <Description>"Charge"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_HeroData]+D8</Address>
+                      <Offsets>
+                        <Offset>40</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105325</ID>
+                      <Description>"Just Moved?"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                      <Color>808000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[pBase_HeroData]+D8</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105381</ID>
+              <Description>"Combat Data"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105382</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[pBase_CombatData]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105384</ID>
+                  <Description>"Name Room"</Description>
+                  <Color>4080FF</Color>
+                  <VariableType>String</VariableType>
+                  <Length>128</Length>
+                  <Unicode>1</Unicode>
+                  <CodePage>0</CodePage>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>[pBase_CombatData]+18</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>18</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105385</ID>
+                  <Description>"- Enemies"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105386</ID>
+                      <Description>"Enemies Size"</Description>
+                      <Color>C0C0C0</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_CombatData]+28</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105393</ID>
+                      <Description>"-- Enemies [1]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105387</ID>
+                          <Description>"Max HP"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105392</ID>
+                          <Description>"HP"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105389</ID>
+                          <Description>"Ice"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105390</ID>
+                          <Description>"Poison"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105388</ID>
+                          <Description>"Shield?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105391</ID>
+                          <Description>"mark?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105394</ID>
+                      <Description>"-- Enemies [2]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105395</ID>
+                          <Description>"Max HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105396</ID>
+                          <Description>"HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105397</ID>
+                          <Description>"Ice"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105398</ID>
+                          <Description>"Poison"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105399</ID>
+                          <Description>"Shield?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105400</ID>
+                          <Description>"mark?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105401</ID>
+                      <Description>"-- Enemies [3]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105402</ID>
+                          <Description>"Max HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105403</ID>
+                          <Description>"HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105404</ID>
+                          <Description>"Ice"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105405</ID>
+                          <Description>"Poison"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105406</ID>
+                          <Description>"Shield?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105407</ID>
+                          <Description>"mark?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105408</ID>
+                      <Description>"-- Enemies [4]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105409</ID>
+                          <Description>"Max HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105410</ID>
+                          <Description>"HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105411</ID>
+                          <Description>"Ice"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105412</ID>
+                          <Description>"Poison"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105413</ID>
+                          <Description>"Shield?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105414</ID>
+                          <Description>"mark?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105415</ID>
+                      <Description>"-- Enemies [5]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105416</ID>
+                          <Description>"Max HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105417</ID>
+                          <Description>"HP"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105418</ID>
+                          <Description>"Ice"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105419</ID>
+                          <Description>"Poison"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105420</ID>
+                          <Description>"Shield?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105421</ID>
+                          <Description>"mark?"</Description>
+                          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>808000</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>[pBase_CombatData]+28</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105332</ID>
+              <Description>"Tiles Data"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105333</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[pBase_TilesData]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105334</ID>
+                  <Description>"- Deck"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105335</ID>
+                      <Description>"Deck Size"</Description>
+                      <Color>C0C0C0</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_TilesData]+28</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105422</ID>
+                      <Description>"INFO : Cooldown Need battle And Give Up For Effect Chance "</Description>
+                      <Color>0080FF</Color>
+                      <GroupHeader>1</GroupHeader>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105336</ID>
+                      <Description>"-- Card [1]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105337</ID>
+                          <Description>"Cooldown"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>20</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105354</ID>
+                          <Description>"Cooldown Charge"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>9C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105338</ID>
+                          <Description>"Value"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105339</ID>
+                          <Description>"Base Value"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>2C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105340</ID>
+                          <Description>"Level"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>30</Offset>
+                            <Offset>20</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105341</ID>
+                          <Description>"Max Level"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                            <Offset>20</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105342</ID>
+                      <Description>"-- Card [2]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105343</ID>
+                          <Description>"Cooldown"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105355</ID>
+                          <Description>"Cooldown Charge"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>9C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105344</ID>
+                          <Description>"Value"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105345</ID>
+                          <Description>"Base Value"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>2C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105346</ID>
+                          <Description>"Level"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>30</Offset>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105347</ID>
+                          <Description>"Max Level"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105348</ID>
+                      <Description>"-- Card [3]"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105349</ID>
+                          <Description>"Cooldown"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>20</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105356</ID>
+                          <Description>"Cooldown Charge"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>9C</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105350</ID>
+                          <Description>"Value"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105351</ID>
+                          <Description>"Base Value"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>2C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105352</ID>
+                          <Description>"Level"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>30</Offset>
+                            <Offset>20</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105353</ID>
+                          <Description>"Max Level"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_TilesData]+28</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                            <Offset>20</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105619</ID>
+                      <Description>"-- Card [4]"</Description>
+                      <Options moManualExpandCollapse="1"/>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <Address>[pBase_TilesData]+28</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>38</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105620</ID>
+                          <Description>"Cooldown"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+20</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105621</ID>
+                          <Description>"Cooldown Charge"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+9C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105622</ID>
+                          <Description>"Value"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+20</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105623</ID>
+                          <Description>"Base Value"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+20</Address>
+                          <Offsets>
+                            <Offset>2C</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105624</ID>
+                          <Description>"Level"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+20</Address>
+                          <Offsets>
+                            <Offset>30</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105625</ID>
+                          <Description>"Max Level"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+20</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>105274</ID>
+      <Description>"============================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"HP Info"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,AgentStats:set_HP,AgentStats:set_HP+37,89 47 24 48 8B 7D F8) // should be unique
+alloc(newmem,$1000,INJECT)
+
+alloc(temp_eax_value,8)
+alloc(inf_hp_f,8)
+alloc(player_hp_info,8)
+alloc(enemy_hp_info,8)
+registersymbol(player_hp_info enemy_hp_info inf_hp_f)
+
+label(player)
+label(enemy)
+label(code)
+label(return)
+
+inf_hp_f:
+dd 0
+temp_eax_value:
+dd 0
+
+
+newmem:
+  mov [temp_eax_value],eax    //save ori value
+  //mov rax,[rdi+30]     //address
+  //mov rax,[rax+558]    //value
+
+  cmp [rdi+18],30
+  jg code
+
+  mov rax,[rdi+10]
+  cmp rax,(int)10         //player
+  je player
+
+  mov rax,[rdi+44]       //value
+  cmp rax,(int)0         //enemy
+  jne enemy
+
+  jmp code
+
+player:
+  mov [player_hp_info], rdi
+
+  cmp [inf_hp_f],01
+  jne code
+  mov eax,[rdi+10] //max HP
+  mov [temp_eax_value],eax
+  jmp code
+enemy:
+  mov [enemy_hp_info], rdi
+  jmp code
+
+code:
+  mov eax,[temp_eax_value]
+  mov [rdi+24],eax
+  mov rdi,[rbp-08]
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 47 24 48 8B 7D F8
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: AgentStats:set_HP+2b
+
+AgentStats:set_HP+4: 48 83 EC 30                    - sub rsp,30
+AgentStats:set_HP+8: 48 89 7D F8                    - mov [rbp-08],rdi
+AgentStats:set_HP+c: 48 8B F9                       - mov rdi,rcx
+AgentStats:set_HP+f: 48 89 55 F0                    - mov [rbp-10],rdx
+AgentStats:set_HP+13: 4C 63 47 10                    - movsxd  r8,dword ptr [rdi+10]
+AgentStats:set_HP+17: 48 63 4D F0                    - movsxd  rcx,dword ptr [rbp-10]
+AgentStats:set_HP+1b: 33 D2                          - xor edx,edx
+AgentStats:set_HP+1d: 90                             - nop 
+AgentStats:set_HP+1e: 49 BB D0 B3 A9 B0 7E 01 00 00  - mov r11,UnityEngine.Mathf:Clamp
+AgentStats:set_HP+28: 41 FF D3                       - call r11
+// ---------- INJECTING HERE ----------
+AgentStats:set_HP+2b: 89 47 20                       - mov [rdi+20],eax
+// ---------- DONE INJECTING  ----------
+AgentStats:set_HP+2e: 48 8B 7D F8                    - mov rdi,[rbp-08]
+AgentStats:set_HP+32: 48 8D 65 00                    - lea rsp,[rbp+00]
+AgentStats:set_HP+36: 5D                             - pop rbp
+AgentStats:set_HP+37: C3                             - ret 
+17EB19A38F8: 01 04 02                       - add [rdx+rax],eax
+17EB19A38FB: 05 04 03 01 50                 - add eax,50010304
+17EB19A3900: 00 00                          - add [rax],al
+17EB19A3902: 00 00                          - add [rax],al
+17EB19A3904: 00 00                          - add [rax],al
+17EB19A3906: 00 00                          - add [rax],al
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>62</ID>
+          <Description>"Player"</Description>
+          <Options moManualExpandCollapse="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>0080FF</Color>
+          <GroupHeader>1</GroupHeader>
+          <Address>[player_hp_info]</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>63</ID>
+              <Description>"inf HP"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+inf_hp_f:
+dd 1
+[DISABLE]
+inf_hp_f:
+dd 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>20</ID>
+              <Description>"hp"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+24</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>25</ID>
+              <Description>"maxHP"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+10</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"shield"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+14</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24</ID>
+              <Description>"ice"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+18</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>23</ID>
+              <Description>"poison"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+1c</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>21</ID>
+              <Description>"mark"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+20</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>61</ID>
+          <Description>"Enemy"</Description>
+          <Options moManualExpandCollapse="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>0080FF</Color>
+          <GroupHeader>1</GroupHeader>
+          <Address>[enemy_hp_info]</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>104314</ID>
+              <Description>"hp"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+24</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104317</ID>
+              <Description>"ice"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+18</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104319</ID>
+              <Description>"mark"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+20</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104315</ID>
+              <Description>"maxHP"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+10</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104318</ID>
+              <Description>"poison"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+1c</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104316</ID>
+              <Description>"shield"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+14</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>36</ID>
+      <Description>"inf charge (change position)"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,SpecialMoveCooldown:set_Charge,SpecialMoveCooldown:set_Charge+88,89 77 40 48 8B 47 30) // should be unique
+alloc(newmem,$1000,INJECT)
+
+label(code)
+label(return)
+
+newmem:
+  mov esi,[rdi+3c]
+code:
+  mov [rdi+40],esi
+  mov rax,[rdi+30]
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 77 40 48 8B 47 30
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: SpecialMoveCooldown:set_Charge+5b
+
+SpecialMoveCooldown:set_Charge+30: 3B F0                          - cmp esi,eax
+SpecialMoveCooldown:set_Charge+32: 7D 27                          - jnl SpecialMoveCooldown:set_Charge+5b
+SpecialMoveCooldown:set_Charge+34: 48 8B 47 28                    - mov rax,[rdi+28]
+SpecialMoveCooldown:set_Charge+38: 48 8B C8                       - mov rcx,rax
+SpecialMoveCooldown:set_Charge+3b: 48 BA 10 08 EB F6 7E 01 00 00  - mov rdx,0000017EF6EB0810
+SpecialMoveCooldown:set_Charge+45: 83 38 00                       - cmp dword ptr [rax],00
+SpecialMoveCooldown:set_Charge+48: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+SpecialMoveCooldown:set_Charge+4d: 90                             - nop 
+SpecialMoveCooldown:set_Charge+4e: 49 BB 90 4D 93 B1 7E 01 00 00  - mov r11,UnityEngine.Animator:SetTrigger
+SpecialMoveCooldown:set_Charge+58: 41 FF D3                       - call r11
+// ---------- INJECTING HERE ----------
+SpecialMoveCooldown:set_Charge+5b: 89 77 40                       - mov [rdi+40],esi
+// ---------- DONE INJECTING  ----------
+SpecialMoveCooldown:set_Charge+5e: 48 8B 47 30                    - mov rax,[rdi+30]
+SpecialMoveCooldown:set_Charge+62: 48 63 57 40                    - movsxd  rdx,dword ptr [rdi+40]
+SpecialMoveCooldown:set_Charge+66: 48 8B C8                       - mov rcx,rax
+SpecialMoveCooldown:set_Charge+69: 83 38 00                       - cmp dword ptr [rax],00
+SpecialMoveCooldown:set_Charge+6c: 66 90                          - nop 2
+SpecialMoveCooldown:set_Charge+6e: 49 BB 40 5D 9A B1 7E 01 00 00  - mov r11,CooldownGraphics:set_Charge
+SpecialMoveCooldown:set_Charge+78: 41 FF D3                       - call r11
+SpecialMoveCooldown:set_Charge+7b: 48 8B 75 F0                    - mov rsi,[rbp-10]
+SpecialMoveCooldown:set_Charge+7f: 48 8B 7D F8                    - mov rdi,[rbp-08]
+SpecialMoveCooldown:set_Charge+83: 48 8D 65 00                    - lea rsp,[rbp+00]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>45</ID>
+      <Description>"Skill Info"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,Tile:set_CooldownCharge,Tile:set_CooldownCharge+66,89 87 9C 00 00 00 48 8B 47) // should be unique
+alloc(newmem,$1000,INJECT)
+
+alloc(skill_info,8)
+alloc(skill_flag,8)
+registersymbol(skill_info skill_flag)
+
+label(code)
+label(return)
+label(nochage)
+
+skill_flag:
+dd 0
+
+newmem:
+  mov [skill_info], rdi
+
+  cmp [skill_flag],01
+  je nochage
+  jmp code
+
+nochage:
+  mov rax,[rdi+00000020]
+  mov eax,[rax+00000024]
+  jmp code
+
+code:
+  mov [rdi+0000009c],eax
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 87 9C 00 00 00
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Tile:set_CooldownCharge+34
+
+Tile:set_CooldownCharge+10: 48 8B F9                       - mov rdi,rcx
+Tile:set_CooldownCharge+13: 48 8B F2                       - mov rsi,rdx
+Tile:set_CooldownCharge+16: 48 63 87 94 00 00 00           - movsxd  rax,dword ptr [rdi+00000094]
+Tile:set_CooldownCharge+1d: 89 45 E8                       - mov [rbp-18],eax
+Tile:set_CooldownCharge+20: 48 8B 47 20                    - mov rax,[rdi+20]
+Tile:set_CooldownCharge+24: 48 8B C8                       - mov rcx,rax
+Tile:set_CooldownCharge+27: 83 39 00                       - cmp dword ptr [rcx],00
+Tile:set_CooldownCharge+2a: 48 63 40 24                    - movsxd  rax,dword ptr [rax+24]
+Tile:set_CooldownCharge+2e: 3B F0                          - cmp esi,eax
+Tile:set_CooldownCharge+30: 48 0F 4C C6                    - cmovl rax,rsi
+// ---------- INJECTING HERE ----------
+Tile:set_CooldownCharge+34: 89 87 94 00 00 00              - mov [rdi+00000094],eax
+// ---------- DONE INJECTING  ----------
+Tile:set_CooldownCharge+3a: 48 8B 47 18                    - mov rax,[rdi+18]
+Tile:set_CooldownCharge+3e: 48 8B 40 48                    - mov rax,[rax+48]
+Tile:set_CooldownCharge+42: 48 63 97 94 00 00 00           - movsxd  rdx,dword ptr [rdi+00000094]
+Tile:set_CooldownCharge+49: 48 8B C8                       - mov rcx,rax
+Tile:set_CooldownCharge+4c: 83 38 00                       - cmp dword ptr [rax],00
+Tile:set_CooldownCharge+4f: 48 8D AD 00 00 00 00           - lea rbp,[rbp+00000000]
+Tile:set_CooldownCharge+56: 49 BB 40 5D 9A B1 7E 01 00 00  - mov r11,CooldownGraphics:set_Charge
+Tile:set_CooldownCharge+60: 41 FF D3                       - call r11
+Tile:set_CooldownCharge+63: 48 8B CF                       - mov rcx,rdi
+Tile:set_CooldownCharge+66: 49 BB 50 6C 9B B1 7E 01 00 00  - mov r11,Tile:get_FullyCharged
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>47</ID>
+          <Description>"inf card charge (enemy will creat new card when it attack every time )"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+skill_flag:
+dd 1
+[DISABLE]
+skill_flag:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>64</ID>
+          <Description>"Set Max Level(BUG)"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,Tile:GetTileSaveData,Tile:GetTileSaveData+d9,48 63 49 30 89 48 24) // should be unique
+alloc(newmem,$1000,INJECT)
+
+alloc(set_maxlevel, 8)
+registersymbol(set_maxlevel)
+label(code)
+label(return)
+
+set_maxlevel:
+dd (int)10
+
+newmem:
+  mov edx,[set_maxlevel]
+  mov [rcx+28],edx
+code:
+  movsxd  rcx,dword ptr [rcx+30]
+  mov [rax+24],ecx
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 48 63 49 30 89 48 24
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Tile:GetTileSaveData+a7
+
+Tile:GetTileSaveData+85: 48 63 49 28  - movsxd  rcx,dword ptr [rcx+28]
+Tile:GetTileSaveData+89: 89 48 1C     - mov [rax+1C],ecx
+Tile:GetTileSaveData+8c: 48 8B 4E 20  - mov rcx,[rsi+20]
+Tile:GetTileSaveData+90: 48 8B D1     - mov rdx,rcx
+Tile:GetTileSaveData+93: 83 3A 00     - cmp dword ptr [rdx],00
+Tile:GetTileSaveData+96: 48 63 49 2C  - movsxd  rcx,dword ptr [rcx+2C]
+Tile:GetTileSaveData+9a: 89 48 20     - mov [rax+20],ecx
+Tile:GetTileSaveData+9d: 48 8B 4E 20  - mov rcx,[rsi+20]
+Tile:GetTileSaveData+a1: 48 8B D1     - mov rdx,rcx
+Tile:GetTileSaveData+a4: 83 3A 00     - cmp dword ptr [rdx],00
+// ---------- INJECTING HERE ----------
+Tile:GetTileSaveData+a7: 48 63 49 30  - movsxd  rcx,dword ptr [rcx+30]
+// ---------- DONE INJECTING  ----------
+Tile:GetTileSaveData+ab: 89 48 24     - mov [rax+24],ecx
+Tile:GetTileSaveData+ae: 48 8B 4E 20  - mov rcx,[rsi+20]
+Tile:GetTileSaveData+b2: 48 8B D1     - mov rdx,rcx
+Tile:GetTileSaveData+b5: 83 3A 00     - cmp dword ptr [rdx],00
+Tile:GetTileSaveData+b8: 48 63 49 34  - movsxd  rcx,dword ptr [rcx+34]
+Tile:GetTileSaveData+bc: 89 48 28     - mov [rax+28],ecx
+Tile:GetTileSaveData+bf: 48 8B 4E 20  - mov rcx,[rsi+20]
+Tile:GetTileSaveData+c3: 48 8B D1     - mov rdx,rcx
+Tile:GetTileSaveData+c6: 83 3A 00     - cmp dword ptr [rdx],00
+Tile:GetTileSaveData+c9: 48 63 49 38  - movsxd  rcx,dword ptr [rcx+38]
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>65</ID>
+              <Description>"set number"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>set_maxlevel</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>46</ID>
+          <Description>"p_base"</Description>
+          <Options moManualExpandCollapse="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>0080FF</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[skill_info]+20</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>104306</ID>
+              <Description>"cooldown"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+24</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104307</ID>
+              <Description>"cooldownCharge"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[skill_info]+9c</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104308</ID>
+              <Description>"value"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+28</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104309</ID>
+              <Description>"baseValue"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+2c</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104310</ID>
+              <Description>"level"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+30</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104311</ID>
+              <Description>"maxLevel"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+34</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104312</ID>
+              <Description>"attackEffect"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+38</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>104313</ID>
+              <Description>"tileEffect"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+3c</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104324</ID>
+      <Description>"Money Info (when pick up money)(BUG)"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version: 
+  Date   : 2023-07-01
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,Globals:set_Coins,Globals:set_Coins+c0,48 8B 40 20 48 B9 ?? ?? ?? ?? ?? ?? 00 00 48 63 11 48 8B C8) // should be unique
+alloc(newmem,$1000,INJECT)
+alloc(money_info,8)
+registersymbol(money_info)
+label(code)
+label(return)
+
+newmem:
+  mov [money_info],rcx
+code:
+  movsxd  rdx,dword ptr [rcx]
+  mov rcx,rax
+  jmp return
+
+INJECT+0c:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT+0c:
+  db 48 63 11 48 8B C8
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Globals:set_Coins+a4
+
+Globals:set_Coins+6e: 49 BB B0 03 13 E0 11 01 00 00  - mov r11,UnityEngine.Object:op_Inequality
+Globals:set_Coins+78: 41 FF D3                       - call r11
+Globals:set_Coins+7b: 85 C0                          - test eax,eax
+Globals:set_Coins+7d: 0F 84 38 00 00 00              - je Globals:set_Coins+bb
+Globals:set_Coins+83: 48 B8 90 38 4A B2 12 01 00 00  - mov rax,00000112B24A3890
+Globals:set_Coins+8d: 48 8B 00                       - mov rax,[rax]
+Globals:set_Coins+90: 48 8B C8                       - mov rcx,rax
+Globals:set_Coins+93: 83 39 00                       - cmp dword ptr [rcx],00
+Globals:set_Coins+96: 48 8B 40 20                    - mov rax,[rax+20]
+Globals:set_Coins+9a: 48 B9 B4 6E 4A B2 12 01 00 00  - mov rcx,00000112B24A6EB4
+// ---------- INJECTING HERE ----------
+Globals:set_Coins+a4: 48 63 11                       - movsxd  rdx,dword ptr [rcx]
+// ---------- DONE INJECTING  ----------
+Globals:set_Coins+a7: 48 8B C8                       - mov rcx,rax
+Globals:set_Coins+aa: 83 38 00                       - cmp dword ptr [rax],00
+Globals:set_Coins+ad: 90                             - nop 
+Globals:set_Coins+ae: 49 BB 30 AD 14 E0 11 01 00 00  - mov r11,UnityEngine.Events.UnityEvent`1[System.Int32]:Invoke
+Globals:set_Coins+b8: 41 FF D3                       - call r11
+Globals:set_Coins+bb: 48 8D 65 00                    - lea rsp,[rbp+00]
+Globals:set_Coins+bf: 5D                             - pop rbp
+Globals:set_Coins+c0: C3                             - ret 
+111E014AC81: 00 00                          - add [rax],al
+111E014AC83: 00 00                          - add [rax],al
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>104294</ID>
+          <Description>"抽卡片還有延伸的空間"</Description>
+          <GroupHeader>1</GroupHeader>
+          <Address/>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104291</ID>
+          <Description>"no dec when reroll(BUG)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,Globals:set_Coins,Globals:set_Coins+78,48 63 4D F8 89 08 48 B8) // should be unique
+alloc(newmem,$1000,INJECT)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  movsxd  rcx,dword ptr [rbp-08]
+  //mov [rax],ecx
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 48 63 4D F8 89 08
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Globals:set_Coins+16
+
+17EB0A9B297: 00 00                          - add [rax],al
+17EB0A9B299: 00 00                          - add [rax],al
+17EB0A9B29B: 00 00                          - add [rax],al
+17EB0A9B29D: 00 00                          - add [rax],al
+17EB0A9B29F: 00 55 48                       - add [rbp+48],dl
+Globals:set_Coins+2: 8B EC                          - mov ebp,esp
+Globals:set_Coins+4: 48 83 EC 30                    - sub rsp,30
+Globals:set_Coins+8: 48 89 4D F8                    - mov [rbp-08],rcx
+Globals:set_Coins+c: 48 B8 B0 6E 3E A4 7D 01 00 00  - mov rax,0000017DA43E6EB0
+Globals:set_Coins+16: 48 63 4D F8                    - movsxd  rcx,dword ptr [rbp-08]
+// ---------- INJECTING HERE ----------
+Globals:set_Coins+1a: 89 08                          - mov [rax],ecx
+// ---------- DONE INJECTING  ----------
+Globals:set_Coins+1c: 48 B8 B0 6E 3E A4 7D 01 00 00  - mov rax,0000017DA43E6EB0
+Globals:set_Coins+26: 48 63 08                       - movsxd  rcx,dword ptr [rax]
+Globals:set_Coins+29: 48 B8 B4 6E 3E A4 7D 01 00 00  - mov rax,0000017DA43E6EB4
+Globals:set_Coins+33: 4C 63 00                       - movsxd  r8,dword ptr [rax]
+Globals:set_Coins+36: 33 D2                          - xor edx,edx
+Globals:set_Coins+38: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+Globals:set_Coins+3d: 90                             - nop 
+Globals:set_Coins+3e: 49 BB D0 B3 A9 B0 7E 01 00 00  - mov r11,UnityEngine.Mathf:Clamp
+Globals:set_Coins+48: 41 FF D3                       - call r11
+Globals:set_Coins+4b: 48 8B C8                       - mov rcx,rax
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104293</ID>
+          <Description>"reroll price no inc"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+
+aobscanregion(INJECT,RewardRerolling:RerollButtonPressed,RewardRerolling:RerollButtonPressed+d4,89 46 30 48 8B CE 33) // should be unique
+alloc(newmem,$1000,INJECT)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  //mov [rsi+30],eax
+  mov rcx,rsi
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 46 30 48 8B CE
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: RewardRerolling:RerollButtonPressed+b5
+
+RewardRerolling:RerollButtonPressed+88: 48 8B C8                       - mov rcx,rax
+RewardRerolling:RerollButtonPressed+8b: 48 BA 50 2D 91 B2 7E 01 00 00  - mov rdx,0000017EB2912D50
+RewardRerolling:RerollButtonPressed+95: 83 38 00                       - cmp dword ptr [rax],00
+RewardRerolling:RerollButtonPressed+98: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+RewardRerolling:RerollButtonPressed+9d: 90                             - nop 
+RewardRerolling:RerollButtonPressed+9e: 49 BB 50 B0 76 19 7F 01 00 00  - mov r11,SoundEffectsManager:Play
+RewardRerolling:RerollButtonPressed+a8: 41 FF D3                       - call r11
+RewardRerolling:RerollButtonPressed+ab: 48 63 46 30                    - movsxd  rax,dword ptr [rsi+30]
+RewardRerolling:RerollButtonPressed+af: 48 63 4E 34                    - movsxd  rcx,dword ptr [rsi+34]
+RewardRerolling:RerollButtonPressed+b3: 03 C1                          - add eax,ecx
+// ---------- INJECTING HERE ----------
+RewardRerolling:RerollButtonPressed+b5: 89 46 30                       - mov [rsi+30],eax
+// ---------- DONE INJECTING  ----------
+RewardRerolling:RerollButtonPressed+b8: 48 8B CE                       - mov rcx,rsi
+RewardRerolling:RerollButtonPressed+bb: 33 D2                          - xor edx,edx
+RewardRerolling:RerollButtonPressed+bd: 90                             - nop 
+RewardRerolling:RerollButtonPressed+be: 49 BB 10 97 29 B3 7E 01 00 00  - mov r11,RewardRerolling:UpdateState
+RewardRerolling:RerollButtonPressed+c8: 41 FF D3                       - call r11
+RewardRerolling:RerollButtonPressed+cb: 48 8B 75 F8                    - mov rsi,[rbp-08]
+RewardRerolling:RerollButtonPressed+cf: 48 8D 65 00                    - lea rsp,[rbp+00]
+RewardRerolling:RerollButtonPressed+d3: 5D                             - pop rbp
+RewardRerolling:RerollButtonPressed+d4: C3                             - ret 
+17EB32AD6C5: 00 00                          - add [rax],al
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>60</ID>
+          <Description>"money"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[money_info]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>56</ID>
+      <Description>"Game Info (when anyone get  hitting)"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : ShogunShowdownDemo.exe
+  Version: 
+  Date   : 2023-06-22
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,MetricsManager:UpdateRunStats,MetricsManager:UpdateRunStats+8b,89 48 14 48 8B 46 78) // should be unique
+alloc(newmem,$1000,INJECT)
+
+alloc(game_info,8)
+registersymbol(game_info)
+
+label(code)
+label(return)
+
+newmem:
+  mov [game_info],rax
+code:
+  mov [rax+14],ecx
+  mov rax,[rsi+78]
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 48 14 48 8B 46 78
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: MetricsManager:UpdateRunStats+3e
+
+MetricsManager:UpdateRunStats+8: 48 8B F1                       - mov rsi,rcx
+MetricsManager:UpdateRunStats+b: 48 8B 86 A0 00 00 00           - mov rax,[rsi+000000A0]
+MetricsManager:UpdateRunStats+12: 48 8B 40 10                    - mov rax,[rax+10]
+MetricsManager:UpdateRunStats+16: 48 B9 A4 6E 3E A4 7D 01 00 00  - mov rcx,0000017DA43E6EA4
+MetricsManager:UpdateRunStats+20: 48 63 09                       - movsxd  rcx,dword ptr [rcx]
+MetricsManager:UpdateRunStats+23: 89 48 10                       - mov [rax+10],ecx
+MetricsManager:UpdateRunStats+26: 48 8B 86 A0 00 00 00           - mov rax,[rsi+000000A0]
+MetricsManager:UpdateRunStats+2d: 48 8B 40 10                    - mov rax,[rax+10]
+MetricsManager:UpdateRunStats+31: 48 B9 B0 6E 3E A4 7D 01 00 00  - mov rcx,0000017DA43E6EB0
+MetricsManager:UpdateRunStats+3b: 48 63 09                       - movsxd  rcx,dword ptr [rcx]
+// ---------- INJECTING HERE ----------
+MetricsManager:UpdateRunStats+3e: 89 48 14                       - mov [rax+14],ecx
+// ---------- DONE INJECTING  ----------
+MetricsManager:UpdateRunStats+41: 48 8B 86 A0 00 00 00           - mov rax,[rsi+000000A0]
+MetricsManager:UpdateRunStats+48: 48 8B 40 10                    - mov rax,[rax+10]
+MetricsManager:UpdateRunStats+4c: 48 B9 90 1F EF F6 7E 01 00 00  - mov rcx,0000017EF6EF1F90
+MetricsManager:UpdateRunStats+56: 48 8B 09                       - mov rcx,[rcx]
+MetricsManager:UpdateRunStats+59: 48 8B D1                       - mov rdx,rcx
+MetricsManager:UpdateRunStats+5c: 83 3A 00                       - cmp dword ptr [rdx],00
+MetricsManager:UpdateRunStats+5f: F3 0F 10 41 64                 - movss xmm0,[rcx+64]
+MetricsManager:UpdateRunStats+64: F3 0F 5A C0                    - cvtss2sd xmm0,xmm0
+MetricsManager:UpdateRunStats+68: F2 0F 5A E8                    - cvtsd2ss xmm5,xmm0
+MetricsManager:UpdateRunStats+6c: F3 0F 11 6C 24 08              - movss [rsp+08],xmm5
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>57</ID>
+          <Description>"p_base"</Description>
+          <Options moManualExpandCollapse="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>0080FF</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[game_info]</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>55</ID>
+              <Description>"day"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+10</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>54</ID>
+              <Description>"coins"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+14</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>53</ID>
+              <Description>"time"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+18</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>52</ID>
+              <Description>"hits"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+1C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>51</ID>
+              <Description>"turns"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+20</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>50</ID>
+              <Description>"combos"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+24</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>48</ID>
+              <Description>"numberOfCombatRoomsCleared"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+2C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>49</ID>
+              <Description>"friendlyKills"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+28</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104296</ID>
+      <Description>"inf skeleton (add 999 when spend)"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : ShogunShowdown.exe
+  Version:
+  Date   : 2023-07-01
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanregion(INJECT,Globals:set_KillCount,Globals:set_KillCount+b8,48 63 4D F8 89 08 ) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  movsxd  rcx,dword ptr [rbp-08]
+  mov [rax],#999
+
+  jmp return
+
+INJECT:
+  jmp far newmem
+  nop 2
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 48 63 4D F8 89 08
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Globals:set_KillCount+16
+
+24AB8C622C3: 05 04 03 01 50                 - add eax,50010304
+24AB8C622C8: 00 00                          - add [rax],al
+24AB8C622CA: 00 00                          - add [rax],al
+24AB8C622CC: 00 00                          - add [rax],al
+24AB8C622CE: 00 00                          - add [rax],al
+Globals:set_KillCount: 55                             - push rbp
+Globals:set_KillCount+1: 48 8B EC                       - mov rbp,rsp
+Globals:set_KillCount+4: 48 83 EC 30                    - sub rsp,30
+Globals:set_KillCount+8: 48 89 4D F8                    - mov [rbp-08],rcx
+Globals:set_KillCount+c: 48 B8 BC 6E 45 AC 49 02 00 00  - mov rax,00000249AC456EBC
+// ---------- INJECTING HERE ----------
+Globals:set_KillCount+16: 48 63 4D F8                    - movsxd  rcx,dword ptr [rbp-08]
+// ---------- DONE INJECTING  ----------
+Globals:set_KillCount+1a: 89 08                          - mov [rax],ecx
+Globals:set_KillCount+1c: 48 B8 BC 6E 45 AC 49 02 00 00  - mov rax,00000249AC456EBC
+Globals:set_KillCount+26: 48 63 08                       - movsxd  rcx,dword ptr [rax]
+Globals:set_KillCount+29: 33 D2                          - xor edx,edx
+Globals:set_KillCount+2b: 41 B8 E7 03 00 00              - mov r8d,000003E7
+Globals:set_KillCount+31: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+Globals:set_KillCount+36: 49 BB 10 18 C6 B8 4A 02 00 00  - mov r11,UnityEngine.Mathf:Clamp
+Globals:set_KillCount+40: 41 FF D3                       - call r11
+Globals:set_KillCount+43: 48 8B C8                       - mov rcx,rax
+Globals:set_KillCount+46: 48 B8 BC 6E 45 AC 49 02 00 00  - mov rax,00000249AC456EBC
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>GlobalsStaticFields</Name>
+      <Address>21C463C0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Structures StructVersion="2">
+    <Structure Name="AgentStats" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="maxHP" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="Byte" Bytesize="1" OffsetHex="00000014" Description="shield" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="ice" DisplayMethod="unsigned integer"/>
+        <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="poison" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="Byte" Bytesize="1" OffsetHex="00000020" Description="mark" DisplayMethod="unsigned integer"/>
+        <Element Offset="36" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000024" Description="hp" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="RunStats" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="day" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000014" Description="coins" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="time" DisplayMethod="unsigned integer"/>
+        <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="hits" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="turns" DisplayMethod="unsigned integer"/>
+        <Element Offset="36" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000024" Description="combos" DisplayMethod="unsigned integer"/>
+        <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="friendlyKills" DisplayMethod="unsigned integer"/>
+        <Element Offset="44" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000002C" Description="numberOfCombatRoomsCleared" DisplayMethod="unsigned integer"/>
+        <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="nHealPickupDrops" DisplayMethod="unsigned integer"/>
+        <Element Offset="52" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000034" Description="nPotionsPickupDrops" DisplayMethod="unsigned integer"/>
+        <Element Offset="56" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000038" Description="nScrollsPickupDrops" DisplayMethod="unsigned integer"/>
+        <Element Offset="60" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000003C" Description="nNewTilesPicked" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="MetricsManager" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="currentRoomMetrics" DisplayMethod="unsigned integer"/>
+        <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="runMetrics" DisplayMethod="unsigned integer">
+          <Structure Name="RunMetrics" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="runStats" DisplayMethod="unsigned integer">
+                <Structure Name="RunStats" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="day" DisplayMethod="unsigned integer"/>
+                    <Element Offset="20" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000014" Description="coins" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="time" DisplayMethod="unsigned integer"/>
+                    <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="hits" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="turns" DisplayMethod="unsigned integer"/>
+                    <Element Offset="36" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000024" Description="combos" DisplayMethod="unsigned integer"/>
+                    <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="friendlyKills" DisplayMethod="unsigned integer"/>
+                    <Element Offset="44" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000002C" Description="numberOfCombatRoomsCleared" DisplayMethod="unsigned integer"/>
+                    <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="nHealPickupDrops" DisplayMethod="unsigned integer"/>
+                    <Element Offset="52" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000034" Description="nPotionsPickupDrops" DisplayMethod="unsigned integer"/>
+                    <Element Offset="56" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000038" Description="nScrollsPickupDrops" DisplayMethod="unsigned integer"/>
+                    <Element Offset="60" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000003C" Description="nNewTilesPicked" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="24" Vartype="String" Bytesize="1" OffsetHex="00000018" Description="version" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="String" Bytesize="1" OffsetHex="00000020" Description="hero" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="roomMetrics" DisplayMethod="unsigned integer">
+                <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                    <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="playerChoicesInNewTileRewards" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="playerChoicesInTileUpgradeRewards" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="shopItemsBought" DisplayMethod="unsigned integer">
+                <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer">
+                      <Structure Name="String[]" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                        <Elements>
+                          <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="Count" DisplayMethod="unsigned integer"/>
+                          <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="Item[0]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="Item[1]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="Item[2]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="Item[3]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="Item[4]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="Item[5]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="Item[6]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="Item[7]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="Item[8]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="Item[9]" DisplayMethod="unsigned integer">
+                            <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                        </Elements>
+                      </Structure>
+                    </Element>
+                    <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                    <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="72" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000048" Description="runNumber" DisplayMethod="unsigned integer"/>
+              <Element Offset="76" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000004C" Description="numberOfUnlockedTilesAtBeginRun" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000050" Description="numberOfCompletedQuestsAtBeginRun" DisplayMethod="unsigned integer"/>
+              <Element Offset="84" Vartype="Byte" Bytesize="1" OffsetHex="00000054" Description="win" DisplayMethod="unsigned integer"/>
+              <Element Offset="85" Vartype="Byte" Bytesize="1" OffsetHex="00000055" Description="runContinued" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000058" Description="metaCurrencyAtGameOver" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+      </Elements>
+    </Structure>
+    <Structure Name="Tile" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="&lt;Graphics&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="&lt;Attack&gt;k__BackingField" DisplayMethod="unsigned integer">
+          <Structure Name="ArrowAttack" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="attacker" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="Byte" Bytesize="1" OffsetHex="00000020" Description="&lt;ClosestTargetOnly&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="33" Vartype="Byte" Bytesize="1" OffsetHex="00000021" Description="&lt;IsDirectional&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="36" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000024" Description="cooldown" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="&lt;Value&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="44" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000002C" Description="&lt;BaseValue&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="&lt;Level&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="52" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000034" Description="&lt;MaxLevel&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000038" Description="&lt;AttackEffect&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="60" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000003C" Description="&lt;TileEffect&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="String" Bytesize="1" OffsetHex="00000040" Description="&lt;LocalizationTableKey&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="&lt;Range&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="String" Bytesize="1" OffsetHex="00000050" Description="&lt;AnimationTrigger&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="&lt;CompatibleEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="&lt;TileContainerOrigin&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="48" Vartype="String" Bytesize="1" OffsetHex="00000030" Description="&lt;ExtraInfo&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="&lt;InfoBoxActivator&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="animator" DisplayMethod="unsigned integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="mouseTileInteraction" DisplayMethod="unsigned integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="containerOverlapMonitor" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="tilesManager" DisplayMethod="unsigned integer"/>
+        <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="boxCollider" DisplayMethod="unsigned integer"/>
+        <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="trailRenderer" DisplayMethod="unsigned integer"/>
+        <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="trailParticleSystem" DisplayMethod="unsigned integer"/>
+        <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="_tileContainer" DisplayMethod="unsigned integer"/>
+        <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="highlightSounds" DisplayMethod="unsigned integer"/>
+        <Element Offset="136" Vartype="Pointer" Bytesize="8" OffsetHex="00000088" Description="TileContainerChanged" DisplayMethod="unsigned integer"/>
+        <Element Offset="144" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000090" Description="&lt;PreferredHandContainer&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="148" Vartype="Byte" Bytesize="1" OffsetHex="00000094" Description="&lt;JustPerformedComboKill&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="149" Vartype="Byte" Bytesize="1" OffsetHex="00000095" Description="&lt;PointerOnTile&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="150" Vartype="Byte" Bytesize="1" OffsetHex="00000096" Description="debug" DisplayMethod="unsigned integer"/>
+        <Element Offset="151" Vartype="Byte" Bytesize="1" OffsetHex="00000097" Description="_tileIsEnabled" DisplayMethod="unsigned integer"/>
+        <Element Offset="152" Vartype="Byte" Bytesize="1" OffsetHex="00000098" Description="_interactable" DisplayMethod="unsigned integer"/>
+        <Element Offset="156" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000009C" Description="cooldownCharge" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="Tile" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="&lt;Graphics&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="&lt;Attack&gt;k__BackingField" DisplayMethod="unsigned integer">
+          <Structure Name="SwirlAttack" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="attacker" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="Byte" Bytesize="1" OffsetHex="00000020" Description="&lt;ClosestTargetOnly&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="33" Vartype="Byte" Bytesize="1" OffsetHex="00000021" Description="&lt;IsDirectional&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="36" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000024" Description="cooldown" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="&lt;Value&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="44" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000002C" Description="&lt;BaseValue&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="&lt;Level&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="52" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000034" Description="&lt;MaxLevel&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000038" Description="&lt;AttackEffect&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="60" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000003C" Description="&lt;TileEffect&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="&lt;Range&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="String" Bytesize="1" OffsetHex="00000048" Description="&lt;AnimationTrigger&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="&lt;CompatibleEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Byte" Bytesize="1" OffsetHex="00000058" Description="&lt;ClosestTargetOnly&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="&lt;TileContainerOrigin&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="48" Vartype="String" Bytesize="1" OffsetHex="00000030" Description="&lt;ExtraInfo&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="&lt;InfoBoxActivator&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="animator" DisplayMethod="unsigned integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="mouseTileInteraction" DisplayMethod="unsigned integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="containerOverlapMonitor" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="tilesManager" DisplayMethod="unsigned integer"/>
+        <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="boxCollider" DisplayMethod="unsigned integer"/>
+        <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="trailRenderer" DisplayMethod="unsigned integer"/>
+        <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="trailParticleSystem" DisplayMethod="unsigned integer"/>
+        <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="_tileContainer" DisplayMethod="unsigned integer"/>
+        <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="highlightSounds" DisplayMethod="unsigned integer"/>
+        <Element Offset="136" Vartype="Pointer" Bytesize="8" OffsetHex="00000088" Description="TileContainerChanged" DisplayMethod="unsigned integer"/>
+        <Element Offset="144" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000090" Description="&lt;PreferredHandContainer&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="148" Vartype="Byte" Bytesize="1" OffsetHex="00000094" Description="&lt;JustPerformedComboKill&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="149" Vartype="Byte" Bytesize="1" OffsetHex="00000095" Description="&lt;PointerOnTile&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="150" Vartype="Byte" Bytesize="1" OffsetHex="00000096" Description="debug" DisplayMethod="unsigned integer"/>
+        <Element Offset="151" Vartype="Byte" Bytesize="1" OffsetHex="00000097" Description="_tileIsEnabled" DisplayMethod="unsigned integer"/>
+        <Element Offset="152" Vartype="Byte" Bytesize="1" OffsetHex="00000098" Description="_interactable" DisplayMethod="unsigned integer"/>
+        <Element Offset="156" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000009C" Description="cooldownCharge" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="RuntimeType" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_impl" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="type_info" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="GenericCache" DisplayMethod="unsigned integer"/>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="m_serializationCtor" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+</CheatTable>

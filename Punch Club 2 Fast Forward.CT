@@ -1,0 +1,949 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Game Data"</Description>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Punch Club 2 Fast Forward.exe
+  Version: 
+  Date   : 2023-08-01
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,48 8B 46 78 48 8B C8 83 38 00 48 8D 64 24 00 90) // should be unique
+alloc(newmem,$1000)
+
+alloc(gamedata, 8)
+registersymbol(gamedata)
+
+label(code)
+label(return)
+
+newmem:
+  mov [gamedata], rsi
+code:
+  mov rax,[rsi+78]
+  mov rcx,rax
+  cmp dword ptr [rax],00
+  lea rsp,[rsp+00]
+  jmp return
+
+INJECT:
+  jmp far newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 48 8B 46 78 48 8B C8 83 38 00 48 8D 64 24 00
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: MainGame:Update+106
+
+MainGame:Update+d1: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+MainGame:Update+d6: 49 BB 8B A7 8C 0E CD 01 00 00  - mov r11,000001CD0E8CA78B
+MainGame:Update+e0: 41 FF D3                       - call r11
+MainGame:Update+e3: 83 38 00                       - cmp dword ptr [rax],00
+MainGame:Update+e6: 49 BB 90 FE C0 72 CD 01 00 00  - mov r11,LazyBearTechnology.LazyAPI:get_Platform
+MainGame:Update+f0: 41 FF D3                       - call r11
+MainGame:Update+f3: 48 8B C8                       - mov rcx,rax
+MainGame:Update+f6: 48 8B 00                       - mov rax,[rax]
+MainGame:Update+f9: 49 BA B8 0E 18 09 CD 01 00 00  - mov r10,000001CD09180EB8
+MainGame:Update+103: FF 50 A8                       - call qword ptr [rax-58]
+// ---------- INJECTING HERE ----------
+MainGame:Update+106: 48 8B 46 78                    - mov rax,[rsi+78]
+// ---------- DONE INJECTING  ----------
+MainGame:Update+10a: 48 8B C8                       - mov rcx,rax
+MainGame:Update+10d: 83 38 00                       - cmp dword ptr [rax],00
+MainGame:Update+110: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+MainGame:Update+115: 90                             - nop 
+MainGame:Update+116: 49 BB 30 80 8E 0E CD 01 00 00  - mov r11,ActionProcessor:Update
+MainGame:Update+120: 41 FF D3                       - call r11
+MainGame:Update+123: 48 8B 86 80 00 00 00           - mov rax,[rsi+00000080]
+MainGame:Update+12a: 48 8B C8                       - mov rcx,rax
+MainGame:Update+12d: 83 38 00                       - cmp dword ptr [rax],00
+MainGame:Update+130: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"p_base"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[gamedata]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"isSavePossible"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>1CDB6EE3A00+91</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"lastAutoSaveTime"</Description>
+      <VariableType>Float</VariableType>
+      <Address>1CDB6EE3A00+94</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"Fight"</Description>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Punch Club 2 Fast Forward.exe
+  Version: 
+  Date   : 2023-08-01
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,48 8B 46 38 48 8B C8 48 BA B0 E4 2A DF CD 01 00 00) // should be unique
+alloc(newmem,$1000)
+
+alloc(fight, 8)
+registersymbol(fight)
+
+label(code)
+label(return)
+
+newmem:
+  mov [fight], rsi
+code:
+  mov rax,[rsi+38]
+  mov rcx,rax
+  mov rdx,000001CDDF2AE4B0
+  jmp return
+
+INJECT:
+  jmp far newmem
+  nop 3
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 48 8B 46 38 48 8B C8 48 BA B0 E4 2A DF CD 01 00 00
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: FightCharacter:get_Energy+f
+
+1CD0B5093C3: 05 04 03 01 50                 - add eax,50010304
+1CD0B5093C8: 00 00                          - add [rax],al
+1CD0B5093CA: 00 00                          - add [rax],al
+1CD0B5093CC: 00 00                          - add [rax],al
+1CD0B5093CE: 00 00                          - add [rax],al
+FightCharacter:get_Energy: 55                             - push rbp
+FightCharacter:get_Energy+1: 48 8B EC                       - mov rbp,rsp
+FightCharacter:get_Energy+4: 48 83 EC 30                    - sub rsp,30
+FightCharacter:get_Energy+8: 48 89 75 F8                    - mov [rbp-08],rsi
+FightCharacter:get_Energy+c: 48 8B F1                       - mov rsi,rcx
+// ---------- INJECTING HERE ----------
+FightCharacter:get_Energy+f: 48 8B 46 38                    - mov rax,[rsi+38]
+// ---------- DONE INJECTING  ----------
+FightCharacter:get_Energy+13: 48 8B C8                       - mov rcx,rax
+FightCharacter:get_Energy+16: 48 BA B0 E4 2A DF CD 01 00 00  - mov rdx,000001CDDF2AE4B0
+FightCharacter:get_Energy+20: 83 38 00                       - cmp dword ptr [rax],00
+FightCharacter:get_Energy+23: 66 66 90                       - nop 3
+FightCharacter:get_Energy+26: 49 BB D0 52 1A 0B CD 01 00 00  - mov r11,LazyBearTechnology.GameRes:GetInt
+FightCharacter:get_Energy+30: 41 FF D3                       - call r11
+FightCharacter:get_Energy+33: 48 8B 75 F8                    - mov rsi,[rbp-08]
+FightCharacter:get_Energy+37: 48 8D 65 00                    - lea rsp,[rbp+00]
+FightCharacter:get_Energy+3b: 5D                             - pop rbp
+FightCharacter:get_Energy+3c: C3                             - ret 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"p_Base"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[fight]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"item"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <GroupHeader>1</GroupHeader>
+      <Address>1CDF3C28000+38</Address>
+      <Offsets>
+        <Offset>20</Offset>
+        <Offset>10</Offset>
+        <Offset>10</Offset>
+      </Offsets>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"type"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>String</VariableType>
+          <Length>10</Length>
+          <Unicode>1</Unicode>
+          <CodePage>0</CodePage>
+          <ZeroTerminate>1</ZeroTerminate>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>14</Offset>
+            <Offset>10</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"value"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"item"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <GroupHeader>1</GroupHeader>
+      <Address>1CDF3C28000+38</Address>
+      <Offsets>
+        <Offset>28</Offset>
+        <Offset>10</Offset>
+        <Offset>10</Offset>
+      </Offsets>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"type"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>String</VariableType>
+          <Length>10</Length>
+          <Unicode>1</Unicode>
+          <CodePage>0</CodePage>
+          <ZeroTerminate>1</ZeroTerminate>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>14</Offset>
+            <Offset>10</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"value"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"item"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <GroupHeader>1</GroupHeader>
+      <Address>1CDF3C28000+38</Address>
+      <Offsets>
+        <Offset>30</Offset>
+        <Offset>10</Offset>
+        <Offset>10</Offset>
+      </Offsets>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"type"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>String</VariableType>
+          <Length>10</Length>
+          <Unicode>1</Unicode>
+          <CodePage>0</CodePage>
+          <ZeroTerminate>1</ZeroTerminate>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>14</Offset>
+            <Offset>10</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"value"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>28</ID>
+      <Description>"item"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <GroupHeader>1</GroupHeader>
+      <Address>1CDF3C28000+38</Address>
+      <Offsets>
+        <Offset>38</Offset>
+        <Offset>10</Offset>
+        <Offset>10</Offset>
+      </Offsets>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"type"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>String</VariableType>
+          <Length>10</Length>
+          <Unicode>1</Unicode>
+          <CodePage>0</CodePage>
+          <ZeroTerminate>1</ZeroTerminate>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>14</Offset>
+            <Offset>10</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"value"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>+0</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Structures StructVersion="2">
+    <Structure Name="MainGame" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="m_CancellationTokenSource" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="player" DisplayMethod="unsigned integer">
+          <Structure Name="PlayerController" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="m_CancellationTokenSource" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="OnControlsChanged" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="OnPlayerEnabledStateChanged" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="joystickController" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="movementComponent" DisplayMethod="unsigned integer">
+                <Structure Name="MovementComponent" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="m_CancellationTokenSource" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="OnStateChanged" DisplayMethod="unsigned integer"/>
+                    <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="currentPath" DisplayMethod="unsigned integer"/>
+                    <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="onCameDestination" DisplayMethod="unsigned integer"/>
+                    <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="seeker" DisplayMethod="unsigned integer"/>
+                    <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="directMoveEnumerator" DisplayMethod="unsigned integer"/>
+                    <Element Offset="72" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000048" Description="currentState" DisplayMethod="unsigned integer"/>
+                    <Element Offset="76" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000004C" Description="currentMovementType" DisplayMethod="unsigned integer"/>
+                    <Element Offset="80" Vartype="Float" Bytesize="4" OffsetHex="00000050" Description="speed" DisplayMethod="unsigned integer"/>
+                    <Element Offset="84" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000054" Description="currentWaypoint" DisplayMethod="unsigned integer"/>
+                    <Element Offset="88" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000058" Description="actualTransformPosition" DisplayMethod="unsigned integer"/>
+                    <Element Offset="100" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000064" Description="direction" DisplayMethod="unsigned integer"/>
+                    <Element Offset="112" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000070" Description="initialDirection" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="animator" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="sortComponent" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="lazyAnimationController" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="fightCharSyncNode" DisplayMethod="unsigned integer"/>
+              <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="bubbleNodeCached" DisplayMethod="unsigned integer"/>
+              <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="pipBoyNodeCached" DisplayMethod="unsigned integer"/>
+              <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="mickBubbleNodeCached" DisplayMethod="unsigned integer"/>
+              <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="animationComponent" DisplayMethod="unsigned integer"/>
+              <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="characterCollider2D" DisplayMethod="unsigned integer"/>
+              <Element Offset="136" Vartype="Pointer" Bytesize="8" OffsetHex="00000088" Description="controlState" DisplayMethod="unsigned integer"/>
+              <Element Offset="144" Vartype="Pointer" Bytesize="8" OffsetHex="00000090" Description="activeState" DisplayMethod="unsigned integer">
+                <Structure Name="BehaviourUpdater`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="states" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="onChangedAction" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="Byte" Bytesize="1" OffsetHex="00000020" Description="currentGlobalState" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="152" Vartype="Pointer" Bytesize="8" OffsetHex="00000098" Description="mouseClickCollider" DisplayMethod="unsigned integer"/>
+              <Element Offset="160" Vartype="Pointer" Bytesize="8" OffsetHex="000000A0" Description="wgo" DisplayMethod="unsigned integer"/>
+              <Element Offset="168" Vartype="Byte" Bytesize="1" OffsetHex="000000A8" Description="&lt;IsEnabled&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="gameSave" DisplayMethod="unsigned integer">
+          <Structure Name="GameSave" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="playerData" DisplayMethod="unsigned integer">
+                <Structure Name="PlayerData" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="currentScene" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="String" Bytesize="1" OffsetHex="00000018" Description="previousMapPosition" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="String" Bytesize="1" OffsetHex="00000020" Description="currentSewerageRoom" DisplayMethod="unsigned integer"/>
+                    <Element Offset="40" Vartype="String" Bytesize="1" OffsetHex="00000028" Description="preBattleScene" DisplayMethod="unsigned integer"/>
+                    <Element Offset="48" Vartype="String" Bytesize="1" OffsetHex="00000030" Description="preBattleMapPosition" DisplayMethod="unsigned integer"/>
+                    <Element Offset="56" Vartype="String" Bytesize="1" OffsetHex="00000038" Description="currentLeftStat" DisplayMethod="unsigned integer"/>
+                    <Element Offset="64" Vartype="String" Bytesize="1" OffsetHex="00000040" Description="currentRightStat" DisplayMethod="unsigned integer"/>
+                    <Element Offset="72" Vartype="String" Bytesize="1" OffsetHex="00000048" Description="fuelLeftStat" DisplayMethod="unsigned integer"/>
+                    <Element Offset="80" Vartype="String" Bytesize="1" OffsetHex="00000050" Description="currentMapPosition" DisplayMethod="unsigned integer"/>
+                    <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="inventoryList" DisplayMethod="unsigned integer"/>
+                    <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="purchasedItems" DisplayMethod="unsigned integer"/>
+                    <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="gameRes" DisplayMethod="unsigned integer">
+                      <Structure Name="GameRes" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                        <Elements>
+                          <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="resValues" DisplayMethod="unsigned integer"/>
+                          <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="resType" DisplayMethod="unsigned integer"/>
+                        </Elements>
+                      </Structure>
+                    </Element>
+                    <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="characterBase" DisplayMethod="unsigned integer">
+                      <Structure Name="CharacterBase" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                        <Elements>
+                          <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="name" DisplayMethod="unsigned integer"/>
+                          <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="gameRes" DisplayMethod="unsigned integer">
+                            <Structure Name="GameRes" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="resValues" DisplayMethod="unsigned integer">
+                                  <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                    <Elements>
+                                      <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer">
+                                        <Structure Name="GameResAtom[]" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                          <Elements>
+                                            <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="Count" DisplayMethod="unsigned integer"/>
+                                            <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="Item[0]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="Item[1]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="Item[2]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="Item[3]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="Item[4]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="Item[5]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="Item[6]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="Item[7]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="Item[8]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="Item[9]" DisplayMethod="unsigned integer">
+                                              <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                          </Elements>
+                                        </Structure>
+                                      </Element>
+                                      <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                                      <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                                      <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                                    </Elements>
+                                  </Structure>
+                                </Element>
+                                <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="resType" DisplayMethod="unsigned integer">
+                                  <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                    <Elements>
+                                      <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer">
+                                        <Structure Name="String[]" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                          <Elements>
+                                            <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="Count" DisplayMethod="unsigned integer"/>
+                                            <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="Item[0]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="Item[1]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="Item[2]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="Item[3]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="Item[4]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="Item[5]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="Item[6]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="Item[7]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="Item[8]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                            <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="Item[9]" DisplayMethod="unsigned integer">
+                                              <Structure Name="System.String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                                                <Elements>
+                                                  <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="_stringLength" DisplayMethod="unsigned integer"/>
+                                                  <Element Offset="20" Vartype="String" Bytesize="1" OffsetHex="00000014" Description="_firstChar" DisplayMethod="unsigned integer"/>
+                                                </Elements>
+                                              </Structure>
+                                            </Element>
+                                          </Elements>
+                                        </Structure>
+                                      </Element>
+                                      <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                                      <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                                      <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                                    </Elements>
+                                  </Structure>
+                                </Element>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="32" Vartype="String" Bytesize="1" OffsetHex="00000020" Description="fighterId" DisplayMethod="unsigned integer"/>
+                          <Element Offset="40" Vartype="String" Bytesize="1" OffsetHex="00000028" Description="prefabPreset" DisplayMethod="unsigned integer"/>
+                          <Element Offset="48" Vartype="String" Bytesize="1" OffsetHex="00000030" Description="skinName" DisplayMethod="unsigned integer"/>
+                          <Element Offset="56" Vartype="String" Bytesize="1" OffsetHex="00000038" Description="fightSoundPreset" DisplayMethod="unsigned integer"/>
+                          <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="school" DisplayMethod="unsigned integer"/>
+                          <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="availableTriggers" DisplayMethod="unsigned integer"/>
+                          <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="availableFightActions" DisplayMethod="unsigned integer"/>
+                          <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="focusDataList" DisplayMethod="unsigned integer"/>
+                          <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="perks" DisplayMethod="unsigned integer">
+                            <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                                <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                                <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="104" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000068" Description="startElo" DisplayMethod="unsigned integer"/>
+                          <Element Offset="108" Vartype="Byte" Bytesize="1" OffsetHex="0000006C" Description="levelingDuringFight" DisplayMethod="unsigned integer"/>
+                          <Element Offset="109" Vartype="Byte" Bytesize="1" OffsetHex="0000006D" Description="isPlayer" DisplayMethod="unsigned integer"/>
+                        </Elements>
+                      </Structure>
+                    </Element>
+                    <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="schoolPresets" DisplayMethod="unsigned integer"/>
+                    <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="currentSchoolPreset" DisplayMethod="unsigned integer"/>
+                    <Element Offset="136" Vartype="Pointer" Bytesize="8" OffsetHex="00000088" Description="recentAttackAbilities" DisplayMethod="unsigned integer"/>
+                    <Element Offset="144" Vartype="Pointer" Bytesize="8" OffsetHex="00000090" Description="recentDefenceAbilities" DisplayMethod="unsigned integer"/>
+                    <Element Offset="152" Vartype="Pointer" Bytesize="8" OffsetHex="00000098" Description="recentPerkAbilities" DisplayMethod="unsigned integer"/>
+                    <Element Offset="160" Vartype="Pointer" Bytesize="8" OffsetHex="000000A0" Description="recentSchool" DisplayMethod="unsigned integer"/>
+                    <Element Offset="168" Vartype="Pointer" Bytesize="8" OffsetHex="000000A8" Description="schoolUnlocked" DisplayMethod="unsigned integer"/>
+                    <Element Offset="176" Vartype="Pointer" Bytesize="8" OffsetHex="000000B0" Description="perks" DisplayMethod="unsigned integer"/>
+                    <Element Offset="184" Vartype="Pointer" Bytesize="8" OffsetHex="000000B8" Description="software" DisplayMethod="unsigned integer"/>
+                    <Element Offset="192" Vartype="Pointer" Bytesize="8" OffsetHex="000000C0" Description="ranEvents" DisplayMethod="unsigned integer"/>
+                    <Element Offset="200" Vartype="Pointer" Bytesize="8" OffsetHex="000000C8" Description="ranScripts" DisplayMethod="unsigned integer"/>
+                    <Element Offset="208" Vartype="Pointer" Bytesize="8" OffsetHex="000000D0" Description="workPenalties" DisplayMethod="unsigned integer"/>
+                    <Element Offset="216" Vartype="Pointer" Bytesize="8" OffsetHex="000000D8" Description="defferedEvents" DisplayMethod="unsigned integer"/>
+                    <Element Offset="224" Vartype="Pointer" Bytesize="8" OffsetHex="000000E0" Description="notices" DisplayMethod="unsigned integer"/>
+                    <Element Offset="232" Vartype="Pointer" Bytesize="8" OffsetHex="000000E8" Description="noticeTypesForCheckDuplicate" DisplayMethod="unsigned integer"/>
+                    <Element Offset="240" Vartype="Pointer" Bytesize="8" OffsetHex="000000F0" Description="noticeTypesForCheckEqualsId" DisplayMethod="unsigned integer"/>
+                    <Element Offset="248" Vartype="String" Bytesize="1" OffsetHex="000000F8" Description="playerRank" DisplayMethod="unsigned integer"/>
+                    <Element Offset="256" Vartype="Pointer" Bytesize="8" OffsetHex="00000100" Description="tapes" DisplayMethod="unsigned integer"/>
+                    <Element Offset="264" Vartype="Byte" Bytesize="1" OffsetHex="00000108" Description="isRankLocked" DisplayMethod="unsigned integer"/>
+                    <Element Offset="268" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000010C" Description="playerMode" DisplayMethod="unsigned integer"/>
+                    <Element Offset="272" Vartype="Byte" Bytesize="1" OffsetHex="00000110" Description="isDeadLockEnabled" DisplayMethod="unsigned integer"/>
+                    <Element Offset="273" Vartype="Byte" Bytesize="1" OffsetHex="00000111" Description="isVrFightModeEnabled" DisplayMethod="unsigned integer"/>
+                    <Element Offset="274" Vartype="Byte" Bytesize="1" OffsetHex="00000112" Description="isNoFuelModeEnabled" DisplayMethod="unsigned integer"/>
+                    <Element Offset="276" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000114" Description="freeStats" DisplayMethod="unsigned integer"/>
+                    <Element Offset="280" Vartype="Byte" Bytesize="1" OffsetHex="00000118" Description="isFuelEnable" DisplayMethod="unsigned integer"/>
+                    <Element Offset="284" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000011C" Description="currentSatisfactionZone" DisplayMethod="unsigned integer"/>
+                    <Element Offset="288" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000120" Description="currentOverloadZone" DisplayMethod="unsigned integer"/>
+                    <Element Offset="292" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000124" Description="currentIntoxicationZone" DisplayMethod="unsigned integer"/>
+                    <Element Offset="296" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000128" Description="debtCount" DisplayMethod="unsigned integer"/>
+                    <Element Offset="300" Vartype="Float" Bytesize="4" OffsetHex="0000012C" Description="bottomGppBorder" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="worldData" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="audioData" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="knowledgeSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="leaguesSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="professionSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="achievementsSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="interactionPhrasesSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="jokePhrasesSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="uiSystem" DisplayMethod="unsigned integer"/>
+              <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="lockedLogics" DisplayMethod="unsigned integer"/>
+              <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="gameLogics" DisplayMethod="unsigned integer"/>
+              <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="unlockedPlaylists" DisplayMethod="unsigned integer"/>
+              <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="visitedScenes" DisplayMethod="unsigned integer"/>
+              <Element Offset="128" Vartype="Float" Bytesize="4" OffsetHex="00000080" Description="gameSaveVersion" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="saveSlot" DisplayMethod="unsigned integer">
+          <Structure Name="SaveSlotData" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="slotName" DisplayMethod="unsigned integer"/>
+              <Element Offset="24" Vartype="String" Bytesize="1" OffsetHex="00000018" Description="saveDateTime" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="String" Bytesize="1" OffsetHex="00000020" Description="serializedCulture" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="day" DisplayMethod="unsigned integer"/>
+              <Element Offset="44" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000002C" Description="str" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="agl" DisplayMethod="unsigned integer"/>
+              <Element Offset="52" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000034" Description="stm" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000038" Description="gpp" DisplayMethod="unsigned integer"/>
+              <Element Offset="60" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000003C" Description="osr" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="Byte" Bytesize="1" OffsetHex="00000040" Description="isAutoSave" DisplayMethod="unsigned integer"/>
+              <Element Offset="65" Vartype="Byte" Bytesize="1" OffsetHex="00000041" Description="isDemoSave" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="gameMap" DisplayMethod="unsigned integer">
+          <Structure Name="GameMap" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="m_CancellationTokenSource" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="mapCamera" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="marker" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="gameMapObjects" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="movingSounds" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="sceneSettings" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="gameMapObjectNode" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="eventObjects" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="target" DisplayMethod="unsigned integer"/>
+              <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="currentLocation" DisplayMethod="unsigned integer">
+                <Structure Name="GameMapObject" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="m_CachedPtr" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="m_CancellationTokenSource" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="gmoSelection" DisplayMethod="unsigned integer"/>
+                    <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="gmoDeselection" DisplayMethod="unsigned integer"/>
+                    <Element Offset="48" Vartype="String" Bytesize="1" OffsetHex="00000030" Description="actionName" DisplayMethod="unsigned integer"/>
+                    <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="&lt;BubbleNode&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="tooltipNodes" DisplayMethod="unsigned integer"/>
+                    <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="walkNode" DisplayMethod="unsigned integer"/>
+                    <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="revealedMapObjectOutline" DisplayMethod="unsigned integer"/>
+                    <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="selectionOutline" DisplayMethod="unsigned integer"/>
+                    <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="icon" DisplayMethod="unsigned integer"/>
+                    <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="mouseCLick" DisplayMethod="unsigned integer"/>
+                    <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="gamepadTap" DisplayMethod="unsigned integer"/>
+                    <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="tooltipPosition" DisplayMethod="unsigned integer"/>
+                    <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="initState" DisplayMethod="unsigned integer"/>
+                    <Element Offset="136" Vartype="Pointer" Bytesize="8" OffsetHex="00000088" Description="gmoState" DisplayMethod="unsigned integer"/>
+                    <Element Offset="144" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000090" Description="actionType" DisplayMethod="unsigned integer"/>
+                    <Element Offset="148" Vartype="Byte" Bytesize="1" OffsetHex="00000094" Description="cursorStateAdded" DisplayMethod="unsigned integer"/>
+                    <Element Offset="149" Vartype="Byte" Bytesize="1" OffsetHex="00000095" Description="isLockedByEvent" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="onCameToDestination" DisplayMethod="unsigned integer"/>
+              <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="virtualCursor" DisplayMethod="unsigned integer"/>
+              <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="gmoUnderVirtualCursorFocus" DisplayMethod="unsigned integer"/>
+              <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="gameSaveSerialized" DisplayMethod="unsigned integer"/>
+              <Element Offset="136" Vartype="Pointer" Bytesize="8" OffsetHex="00000088" Description="customMarkers" DisplayMethod="unsigned integer"/>
+              <Element Offset="144" Vartype="Byte" Bytesize="1" OffsetHex="00000090" Description="isOpenedForCutscene" DisplayMethod="unsigned integer"/>
+              <Element Offset="145" Vartype="Byte" Bytesize="1" OffsetHex="00000091" Description="isMoved" DisplayMethod="unsigned integer"/>
+              <Element Offset="146" Vartype="Byte" Bytesize="1" OffsetHex="00000092" Description="compulsoryMovement" DisplayMethod="unsigned integer"/>
+              <Element Offset="147" Vartype="Byte" Bytesize="1" OffsetHex="00000093" Description="isMusicTurnedDown" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="spritesCollection" DisplayMethod="unsigned integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="scenePlaylistData" DisplayMethod="unsigned integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="audioConfig" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="outlineBehaviour" DisplayMethod="unsigned integer"/>
+        <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="vrFightersOutline" DisplayMethod="unsigned integer"/>
+        <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="menuObject" DisplayMethod="unsigned integer"/>
+        <Element Offset="112" Vartype="Pointer" Bytesize="8" OffsetHex="00000070" Description="gameResDisplayConfig" DisplayMethod="unsigned integer"/>
+        <Element Offset="120" Vartype="Pointer" Bytesize="8" OffsetHex="00000078" Description="&lt;ActionProcessor&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="128" Vartype="Pointer" Bytesize="8" OffsetHex="00000080" Description="&lt;OldSchoolActionProcessor&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="136" Vartype="Byte" Bytesize="1" OffsetHex="00000088" Description="useUnloadAssets" DisplayMethod="unsigned integer"/>
+        <Element Offset="137" Vartype="Byte" Bytesize="1" OffsetHex="00000089" Description="isGameFrozen" DisplayMethod="unsigned integer"/>
+        <Element Offset="138" Vartype="Byte" Bytesize="1" OffsetHex="0000008A" Description="unfreezeGame" DisplayMethod="unsigned integer"/>
+        <Element Offset="140" Vartype="Float" Bytesize="4" OffsetHex="0000008C" Description="frozenTimeScale" DisplayMethod="unsigned integer"/>
+        <Element Offset="144" Vartype="Byte" Bytesize="1" OffsetHex="00000090" Description="isFading" DisplayMethod="unsigned integer"/>
+        <Element Offset="145" Vartype="Byte" Bytesize="1" OffsetHex="00000091" Description="isSavePossible" DisplayMethod="unsigned integer"/>
+        <Element Offset="148" Vartype="Float" Bytesize="4" OffsetHex="00000094" Description="lastAutoSaveTime" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" Description="Length" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="Unicode String" Bytesize="128" OffsetHex="00000014" Description="Value" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="FightCharacter" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="characterBase" DisplayMethod="unsigned integer">
+          <Structure Name="CharacterBase" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="name" DisplayMethod="unsigned integer"/>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="gameRes" DisplayMethod="unsigned integer">
+                <Structure Name="GameRes" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="resValues" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="resType" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="32" Vartype="String" Bytesize="1" OffsetHex="00000020" Description="fighterId" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="String" Bytesize="1" OffsetHex="00000028" Description="prefabPreset" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="String" Bytesize="1" OffsetHex="00000030" Description="skinName" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="String" Bytesize="1" OffsetHex="00000038" Description="fightSoundPreset" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="school" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="availableTriggers" DisplayMethod="unsigned integer"/>
+              <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="availableFightActions" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="focusDataList" DisplayMethod="unsigned integer"/>
+              <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="perks" DisplayMethod="unsigned integer"/>
+              <Element Offset="104" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000068" Description="startElo" DisplayMethod="unsigned integer"/>
+              <Element Offset="108" Vartype="Byte" Bytesize="1" OffsetHex="0000006C" Description="levelingDuringFight" DisplayMethod="unsigned integer"/>
+              <Element Offset="109" Vartype="Byte" Bytesize="1" OffsetHex="0000006D" Description="isPlayer" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="abilityRandom" DisplayMethod="unsigned integer"/>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="triggerRandom" DisplayMethod="unsigned integer"/>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="opponent" DisplayMethod="unsigned integer"/>
+        <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="animations" DisplayMethod="unsigned integer"/>
+        <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="gameRes" DisplayMethod="unsigned integer">
+          <Structure Name="GameRes" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="resValues" DisplayMethod="unsigned integer">
+                <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer">
+                      <Structure Name="GameResAtom[]" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                        <Elements>
+                          <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="Count" DisplayMethod="unsigned integer"/>
+                          <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="Item[0]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="40" Vartype="Pointer" Bytesize="8" OffsetHex="00000028" Description="Item[1]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="48" Vartype="Pointer" Bytesize="8" OffsetHex="00000030" Description="Item[2]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="56" Vartype="Pointer" Bytesize="8" OffsetHex="00000038" Description="Item[3]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="Item[4]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="Item[5]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="Item[6]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="Item[7]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="96" Vartype="Pointer" Bytesize="8" OffsetHex="00000060" Description="Item[8]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                          <Element Offset="104" Vartype="Pointer" Bytesize="8" OffsetHex="00000068" Description="Item[9]" DisplayMethod="unsigned integer">
+                            <Structure Name="LazyBearTechnology.GameResAtom" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                              <Elements>
+                                <Element Offset="16" Vartype="String" Bytesize="1" OffsetHex="00000010" Description="type" DisplayMethod="unsigned integer"/>
+                                <Element Offset="24" Vartype="Float" Bytesize="4" OffsetHex="00000018" Description="value" DisplayMethod="unsigned integer"/>
+                              </Elements>
+                            </Structure>
+                          </Element>
+                        </Elements>
+                      </Structure>
+                    </Element>
+                    <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                    <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="resType" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="64" Vartype="Pointer" Bytesize="8" OffsetHex="00000040" Description="endTurnCopy" DisplayMethod="unsigned integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="flags" DisplayMethod="unsigned integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="usedFightActionsInTick" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="buffs" DisplayMethod="unsigned integer"/>
+        <Element Offset="96" Vartype="Byte" Bytesize="1" OffsetHex="00000060" Description="knockdown" DisplayMethod="unsigned integer"/>
+        <Element Offset="100" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000064" Description="maxEnergy" DisplayMethod="unsigned integer"/>
+        <Element Offset="104" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000068" Description="maxHealth" DisplayMethod="unsigned integer"/>
+        <Element Offset="108" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000006C" Description="startHealth" DisplayMethod="unsigned integer"/>
+        <Element Offset="112" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000070" Description="startEnergy" DisplayMethod="unsigned integer"/>
+        <Element Offset="116" Vartype="Byte" Bytesize="1" OffsetHex="00000074" Description="iAmAttacker" DisplayMethod="unsigned integer"/>
+        <Element Offset="117" Vartype="Byte" Bytesize="1" OffsetHex="00000075" Description="attackerChanged" DisplayMethod="unsigned integer"/>
+        <Element Offset="118" Vartype="Byte" Bytesize="1" OffsetHex="00000076" Description="attackerWillChange" DisplayMethod="unsigned integer"/>
+        <Element Offset="120" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000078" Description="capInitiative" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+</CheatTable>

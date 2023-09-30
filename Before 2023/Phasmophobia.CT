@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>300</ID>
+      <Description>"GhostInfo"</Description>
+      <Options moManualExpandCollapse="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Phasmophobia.exe
+  Version: 
+  Date   : 2023-05-18
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(GhostInfo_test,GameAssembly.dll,40 53 48 83 EC 30 48 8B 41 28 48 8B D9 48 85 C0 0F 84 4F) // should be unique
+alloc(newmem,$1000,GhostInfo_test)
+
+alloc(myGhostInfo, 8)
+registersymbol(myGhostInfo)
+
+label(code)
+label(return)
+
+newmem:
+  mov [myGhostInfo],rcx
+
+code:
+  push rbx
+  sub rsp,30
+  jmp return
+
+GhostInfo_test:
+  jmp newmem
+  nop
+return:
+registersymbol(GhostInfo_test)
+
+[DISABLE]
+
+GhostInfo_test:
+  db 40 53 48 83 EC 30
+
+unregistersymbol(*)
+dealloc(*)
+
+{
+// ORIGINAL CODE - INJECTION POINT: GhostAI.Update
+
+GameAssembly.dll+15CA00D: 33 D2              - xor edx,edx
+GameAssembly.dll+15CA00F: E8 DC A4 D8 FE     - call GameAssembly.DllGetActivationFactory+EE70
+GameAssembly.dll+15CA014: CC                 - int 3 
+GameAssembly.dll+15CA015: E8 06 A5 D8 FE     - call GameAssembly.DllGetActivationFactory+EEA0
+GameAssembly.dll+15CA01A: CC                 - int 3 
+GameAssembly.dll+15CA01B: CC                 - int 3 
+GameAssembly.dll+15CA01C: CC                 - int 3 
+GameAssembly.dll+15CA01D: CC                 - int 3 
+GameAssembly.dll+15CA01E: CC                 - int 3 
+GameAssembly.dll+15CA01F: CC                 - int 3 
+// ---------- INJECTING HERE ----------
+GhostAI.Update: 40 53              - push rbx
+// ---------- DONE INJECTING  ----------
+GameAssembly.dll+15CA022: 48 83 EC 30        - sub rsp,30
+GameAssembly.dll+15CA026: 48 8B 41 28        - mov rax,[rcx+28]
+GameAssembly.dll+15CA02A: 48 8B D9           - mov rbx,rcx
+GameAssembly.dll+15CA02D: 48 85 C0           - test rax,rax
+GameAssembly.dll+15CA030: 0F 84 4F 01 00 00  - je GameAssembly.dll+15CA185
+GameAssembly.dll+15CA036: 80 78 60 00        - cmp byte ptr [rax+60],00
+GameAssembly.dll+15CA03A: 74 31              - je GameAssembly.dll+15CA06D
+GameAssembly.dll+15CA03C: 48 83 79 18 00     - cmp qword ptr [rcx+18],00
+GameAssembly.dll+15CA041: 74 2A              - je GameAssembly.dll+15CA06D
+GameAssembly.dll+15CA043: 33 C9              - xor ecx,ecx
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>307</ID>
+          <Description>"p_base"</Description>
+          <Options moManualExpandCollapse="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <GroupHeader>1</GroupHeader>
+          <Address>[myGhostInfo]</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>301</ID>
+              <Description>"Name (now need solo player info enabled)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>D500D5</Color>
+              <VariableType>String</VariableType>
+              <Length>128</Length>
+              <Unicode>1</Unicode>
+              <CodePage>0</CodePage>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>_Player00</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>D8</Offset>
+                <Offset>118</Offset>
+                <Offset>D0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>302</ID>
+              <Description>"Favourite Room"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>D500D5</Color>
+              <VariableType>String</VariableType>
+              <Length>25</Length>
+              <Unicode>1</Unicode>
+              <CodePage>0</CodePage>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>myGhostInfo</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>60</Offset>
+                <Offset>68</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>303</ID>
+              <Description>"Type (English)"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:Spirit
+1:Wraith
+2:Phantom
+3:Poltergeist
+4:Banshee
+5:Jinn
+6:Mare
+7:Revenant
+8:Shade
+9:Demon
+10:Yurei
+11:Oni
+12:Yokai
+13:Hantu
+14:Goryo
+15:Myling
+16:Onryo
+17:The Twins
+18:Raiju
+19:Obake
+20:The Mimic
+21:Moroi
+22:Deogen
+23:Thaye
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>D500D5</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>myGhostInfo</Address>
+              <Offsets>
+                <Offset>20</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>304</ID>
+              <Description>"Type (English)"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1">0:Spirit
+1:Wraith
+2:Phantom
+3:Poltergeist
+4:Banshee
+5:Jinn
+6:Mare
+7:Revenant
+8:Shade
+9:Demon
+10:Yurei
+11:Oni
+12:Yokai
+13:Hantu
+14:Goryo
+15:Myling
+16:Onryo
+17:The Twins
+18:Raiju
+19:Obake
+20:The Mimic
+21:Moroi
+22:Deogen
+23:Thaye
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>D500D5</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>myGhostInfo</Address>
+              <Offsets>
+                <Offset>20</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>305</ID>
+              <Description>"Hunting"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:On
+0:Off
+</DropDownList>
+              <ShowAsSigned>1</ShowAsSigned>
+              <Color>D500D5</Color>
+              <VariableType>Byte</VariableType>
+              <Address>myGhostInfo</Address>
+              <Offsets>
+                <Offset>C0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>306</ID>
+              <Description>"Ghost Speed (Host Only)"</Description>
+              <ShowAsSigned>1</ShowAsSigned>
+              <Color>93CD32</Color>
+              <VariableType>Float</VariableType>
+              <Address>myGhostInfo</Address>
+              <Offsets>
+                <Offset>A0</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

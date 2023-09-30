@@ -1,0 +1,1289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <Forms>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">3u0hk2nldAU:MM2b.}cxWeIh0Gi32eO*Fu{W?Ph7%{mcIVgALy9FkwaRL(ZnnNpGg/gz.[7L.V;:dpp6@SY!KXQt/cWag#?1b8x4FfafB</UDF1>
+  </Forms>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>114982</ID>
+      <Description>"&lt;=== Attach to process  and activate mono"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+  if(getCEVersion() &lt; 7.4) then
+    ShowMessage('Warning! CE version should be 7.4 or above')
+  end
+
+OpenProcess("The Last Spell.exe")
+  if(process == nil) then
+    ShowMessage('The process is NOT found!')
+  end
+
+LaunchMonoDataCollector()
+{$asm}
+LuaCall(function cycleFullCompact(sender,force) local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full View Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+
+
+[DISABLE]
+ 
+ 
+// LuaCall(cycleFullCompact(nil,false))
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26115</ID>
+          <Description>"Scripts"</Description>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>114983</ID>
+              <Description>"Inf Workers"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Manager.ResourceManager:set_Workers+1d)
+define(bytes,48 8B CE 33 D2)
+
+[ENABLE]
+assert(address,bytes)
+
+address:
+  mov rcx,r8
+
+[DISABLE]
+
+address:
+  db bytes
+  // mov rcx,rsi
+  // xor edx,edx
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Manager.ResourceManager:set_Workers+1d
+
+214C66AAA2C: 02 00                          - add al,[rax]
+214C66AAA2E: 00 00                          - add [rax],al
+TheLastStand.Manager.ResourceManager:set_Workers: 55                             - push rbp
+TheLastStand.Manager.ResourceManager:set_Workers+1: 48 8B EC                       - mov rbp,rsp
+TheLastStand.Manager.ResourceManager:set_Workers+4: 48 83 EC 30                    - sub rsp,30
+TheLastStand.Manager.ResourceManager:set_Workers+8: 48 89 75 F0                    - mov [rbp-10],rsi
+TheLastStand.Manager.ResourceManager:set_Workers+c: 48 89 7D F8                    - mov [rbp-08],rdi
+TheLastStand.Manager.ResourceManager:set_Workers+10: 48 8B F9                       - mov rdi,rcx
+TheLastStand.Manager.ResourceManager:set_Workers+13: 48 8B F2                       - mov rsi,rdx
+TheLastStand.Manager.ResourceManager:set_Workers+16: 4C 63 87 C0 00 00 00           - movsxd  r8,dword ptr [rdi+000000C0]
+// ---------- INJECTING HERE ----------
+TheLastStand.Manager.ResourceManager:set_Workers+1d: 48 8B CE                       - mov rcx,rsi
+// ---------- DONE INJECTING  ----------
+TheLastStand.Manager.ResourceManager:set_Workers+20: 33 D2                          - xor edx,edx
+TheLastStand.Manager.ResourceManager:set_Workers+22: 48 8D 6D 00                    - lea rbp,[rbp+00]
+TheLastStand.Manager.ResourceManager:set_Workers+26: 49 BB 00 3F 8B EB 16 02 00 00  - mov r11,UnityEngine.Mathf:Clamp
+TheLastStand.Manager.ResourceManager:set_Workers+30: 41 FF D3                       - call r11
+TheLastStand.Manager.ResourceManager:set_Workers+33: 89 87 A4 00 00 00              - mov [rdi+000000A4],eax
+TheLastStand.Manager.ResourceManager:set_Workers+39: 48 8B 87 98 00 00 00           - mov rax,[rdi+00000098]
+TheLastStand.Manager.ResourceManager:set_Workers+40: 48 8B C8                       - mov rcx,rax
+TheLastStand.Manager.ResourceManager:set_Workers+43: 48 8B F1                       - mov rsi,rcx
+TheLastStand.Manager.ResourceManager:set_Workers+46: 48 85 C0                       - test rax,rax
+TheLastStand.Manager.ResourceManager:set_Workers+49: 75 02                          - jne TheLastStand.Manager.ResourceManager:set_Workers+4d
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26685</ID>
+              <Description>"Inf Materials"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{
+	Game	: The Last Spell.exe
+	Version	: 2018.4.30.39072
+	Date	: 2021-07-25
+	Author	: aSwedishMagyar
+}
+define(infMaterials,TheLastStand.Manager:ResourceManager:set_Materials)
+define(infMaterialsBytes,55 48 8B EC 48 83 EC 40)
+[ENABLE]
+assert(infMaterials,infMaterialsBytes)
+alloc(newinfMaterials,100,infMaterials)
+label(codeinfMaterials)
+label(returninfMaterials)
+newinfMaterials:
+	cmp rdx,rbx
+    jge codeinfMaterials
+    ret
+codeinfMaterials:
+	db infMaterialsBytes
+	jmp returninfMaterials
+infMaterials:
+	jmp newinfMaterials
+	nop 3
+returninfMaterials:
+[DISABLE]
+infMaterials:
+	db infMaterialsBytes
+
+dealloc(newinfMaterials)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Manager:ResourceManager:set_Materials
+// ---------- INJECTING HERE ----------
+TheLastStand.Manager:ResourceManager:set_Materials: 55                             - push rbp
+TheLastStand.Manager:ResourceManager:set_Materials+1: 48 8B EC                       - mov rbp,rsp
+TheLastStand.Manager:ResourceManager:set_Materials+4: 48 83 EC 40                    - sub rsp,40
+// ---------- DONE INJECTING  ----------
+TheLastStand.Manager:ResourceManager:set_Materials+8: 48 89 75 E8                    - mov [rbp-18],rsi
+TheLastStand.Manager:ResourceManager:set_Materials+c: 48 89 7D F0                    - mov [rbp-10],rdi
+TheLastStand.Manager:ResourceManager:set_Materials+10: 4C 89 75 F8                    - mov [rbp-08],r14
+TheLastStand.Manager:ResourceManager:set_Materials+14: 48 8B F9                       - mov rdi,rcx
+TheLastStand.Manager:ResourceManager:set_Materials+17: 48 8B F2                       - mov rsi,rdx
+TheLastStand.Manager:ResourceManager:set_Materials+1a: 48 63 87 98 00 00 00           - movsxd  rax,dword ptr [rdi+00000098]
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26713</ID>
+              <Description>"always 99.999 gold when buying something"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Manager.ResourceManager:SetGold+123)
+define(bytes,33 C0 85 FF 48 0F 4F C7)
+
+[ENABLE]
+assert(address,bytes)
+address:
+  mov eax,#99999
+  nop
+  nop
+  nop
+
+[DISABLE]
+
+address:
+  db bytes
+  // xor eax,eax
+  // test edi,edi
+  // cmovg rax,rdi
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Manager.ResourceManager:SetGold+d3
+
+TheLastStand.Manager.ResourceManager:SetGold+a0: 49 BA 50 87 01 92 23 02 00 00  - mov r10,0000022392018750
+TheLastStand.Manager.ResourceManager:SetGold+aa: 48 8D 6D 00                    - lea rbp,[rbp+00]
+TheLastStand.Manager.ResourceManager:SetGold+ae: 49 BB 6B D8 4A 64 24 02 00 00  - mov r11,00000224644AD86B
+TheLastStand.Manager.ResourceManager:SetGold+b8: 41 FF D3                       - call r11
+TheLastStand.Manager.ResourceManager:SetGold+bb: 48 8B C8                       - mov rcx,rax
+TheLastStand.Manager.ResourceManager:SetGold+be: 49 8B D5                       - mov rdx,r13
+TheLastStand.Manager.ResourceManager:SetGold+c1: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.Manager.ResourceManager:SetGold+c4: 66 90                          - nop 2
+TheLastStand.Manager.ResourceManager:SetGold+c6: 49 BB E3 E0 CF DB 23 02 00 00  - mov r11,00000223DBCFE0E3
+TheLastStand.Manager.ResourceManager:SetGold+d0: 41 FF D3                       - call r11
+// ---------- INJECTING HERE ----------
+TheLastStand.Manager.ResourceManager:SetGold+d3: 33 C0                          - xor eax,eax
+// ---------- DONE INJECTING  ----------
+TheLastStand.Manager.ResourceManager:SetGold+d5: 85 FF                          - test edi,edi
+TheLastStand.Manager.ResourceManager:SetGold+d7: 48 0F 4F C7                    - cmovg rax,rdi
+TheLastStand.Manager.ResourceManager:SetGold+db: 41 89 87 A4 00 00 00           - mov [r15+000000A4],eax
+TheLastStand.Manager.ResourceManager:SetGold+e2: 49 8B 87 90 00 00 00           - mov rax,[r15+00000090]
+TheLastStand.Manager.ResourceManager:SetGold+e9: 4C 8B F0                       - mov r14,rax
+TheLastStand.Manager.ResourceManager:SetGold+ec: 48 85 C0                       - test rax,rax
+TheLastStand.Manager.ResourceManager:SetGold+ef: 74 0E                          - je TheLastStand.Manager.ResourceManager:SetGold+ff
+TheLastStand.Manager.ResourceManager:SetGold+f1: 49 63 97 A4 00 00 00           - movsxd  rdx,dword ptr [r15+000000A4]
+TheLastStand.Manager.ResourceManager:SetGold+f8: 49 8B CE                       - mov rcx,r14
+TheLastStand.Manager.ResourceManager:SetGold+fb: 41 FF 56 18                    - call qword ptr [r14+18]
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26730</ID>
+              <Description>"Always 9999 Tainted Essence when buying something"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Model.Application:set_DamnedSouls+2a)
+define(bytes,89 77 38 48 8B 34 24 48 8B 7C 24 08 48 83 C4 18)
+
+[ENABLE]
+
+assert(address,bytes)
+alloc(newmem,$200)
+
+label(code)
+label(return)
+
+newmem:
+  mov esi,#9999
+  mov [rdi+38],esi
+
+code:
+  mov rsi,[rsp]
+  mov rdi,[rsp+08]
+  add rsp,18
+  jmp return
+
+address:
+  jmp far newmem
+  nop 2
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // mov [rdi+30],esi
+  // mov rsi,[rsp]
+  // mov rdi,[rsp+08]
+  // add rsp,18
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Model.Application:set_DamnedSouls+38
+
+TheLastStand.Model.Application:set_DamnedSouls+1c: 48 0F B6 C0     - movzx rax,al
+TheLastStand.Model.Application:set_DamnedSouls+20: 48 0F B6 C0     - movzx rax,al
+TheLastStand.Model.Application:set_DamnedSouls+24: 85 C0           - test eax,eax
+TheLastStand.Model.Application:set_DamnedSouls+26: 74 10           - je TheLastStand.Model.Application:set_DamnedSouls+38
+TheLastStand.Model.Application:set_DamnedSouls+28: 8B 47 38        - mov eax,[rdi+38]
+TheLastStand.Model.Application:set_DamnedSouls+2b: 8B 57 30        - mov edx,[rdi+30]
+TheLastStand.Model.Application:set_DamnedSouls+2e: 48 8B CE        - mov rcx,rsi
+TheLastStand.Model.Application:set_DamnedSouls+31: 2B CA           - sub ecx,edx
+TheLastStand.Model.Application:set_DamnedSouls+33: 03 C1           - add eax,ecx
+TheLastStand.Model.Application:set_DamnedSouls+35: 89 47 38        - mov [rdi+38],eax
+// ---------- INJECTING HERE ----------
+TheLastStand.Model.Application:set_DamnedSouls+38: 89 77 30        - mov [rdi+30],esi
+// ---------- DONE INJECTING  ----------
+TheLastStand.Model.Application:set_DamnedSouls+3b: 48 8B 34 24     - mov rsi,[rsp]
+TheLastStand.Model.Application:set_DamnedSouls+3f: 48 8B 7C 24 08  - mov rdi,[rsp+08]
+TheLastStand.Model.Application:set_DamnedSouls+44: 48 83 C4 18     - add rsp,18
+TheLastStand.Model.Application:set_DamnedSouls+48: C3              - ret 
+2BAFAFDF0D9: 00 00           - add [rax],al
+2BAFAFDF0DB: 00 00           - add [rax],al
+2BAFAFDF0DD: 00 00           - add [rax],al
+2BAFAFDF0DF: 00 01           - add [rcx],al
+2BAFAFDF0E1: 04 01           - add al,01
+2BAFAFDF0E3: 00 04 22        - add [rdx],al
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26719</ID>
+              <Description>"fill up to 1000 Stones when building something"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Manager.ResourceManager:set_Materials+cb)
+define(bytes,33 C0 85 F6 48 0F 4F C6)
+
+[ENABLE]
+
+assert(address,bytes)
+
+address:
+  mov eax,#999
+  nop
+  nop
+  nop
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // xor eax,eax
+  // test esi,esi
+  // cmovg rax,rsi
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Manager.ResourceManager:set_Materials+c3
+
+TheLastStand.Manager.ResourceManager:set_Materials+98: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+TheLastStand.Manager.ResourceManager:set_Materials+9d: 90                             - nop 
+TheLastStand.Manager.ResourceManager:set_Materials+9e: 49 BB 20 D8 0A 67 BA 02 00 00  - mov r11,TPLib.TPSingleton`1[T_REF]:get_Instance
+TheLastStand.Manager.ResourceManager:set_Materials+a8: 41 FF D3                       - call r11
+TheLastStand.Manager.ResourceManager:set_Materials+ab: 48 8B C8                       - mov rcx,rax
+TheLastStand.Manager.ResourceManager:set_Materials+ae: 49 8B D6                       - mov rdx,r14
+TheLastStand.Manager.ResourceManager:set_Materials+b1: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.Manager.ResourceManager:set_Materials+b4: 66 90                          - nop 2
+TheLastStand.Manager.ResourceManager:set_Materials+b6: 49 BB 90 11 F4 F9 BA 02 00 00  - mov r11,TheLastStand.Manager.Meta.MetaConditionManager:IncreaseMaterialsSpent
+TheLastStand.Manager.ResourceManager:set_Materials+c0: 41 FF D3                       - call r11
+// ---------- INJECTING HERE ----------
+TheLastStand.Manager.ResourceManager:set_Materials+c3: 33 C0                          - xor eax,eax
+// ---------- DONE INJECTING  ----------
+TheLastStand.Manager.ResourceManager:set_Materials+c5: 85 F6                          - test esi,esi
+TheLastStand.Manager.ResourceManager:set_Materials+c7: 48 0F 4F C6                    - cmovg rax,rsi
+TheLastStand.Manager.ResourceManager:set_Materials+cb: 89 87 98 00 00 00              - mov [rdi+00000098],eax
+TheLastStand.Manager.ResourceManager:set_Materials+d1: 48 89 45 D8                    - mov [rbp-28],rax
+TheLastStand.Manager.ResourceManager:set_Materials+d5: 48 B9 10 21 75 54 BB 02 00 00  - mov rcx,000002BB54752110
+TheLastStand.Manager.ResourceManager:set_Materials+df: 48 8D AD 00 00 00 00           - lea rbp,[rbp+00000000]
+TheLastStand.Manager.ResourceManager:set_Materials+e6: 49 BB C0 2E FE 6C B9 02 00 00  - mov r11,System.Object:__icall_wrapper_ves_icall_object_new_specific
+TheLastStand.Manager.ResourceManager:set_Materials+f0: 41 FF D3                       - call r11
+TheLastStand.Manager.ResourceManager:set_Materials+f3: 48 8B C8                       - mov rcx,rax
+TheLastStand.Manager.ResourceManager:set_Materials+f6: 48 8B 45 D8                    - mov rax,[rbp-28]
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26687</ID>
+              <Description>"Inf Perk Points"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+99)
+define(bytes,FF C9)
+
+[ENABLE]
+assert(address,bytes)
+
+address:
+  nop
+  nop
+
+[DISABLE]
+
+address:
+  db bytes
+  // dec ecx
+  // cmp dword ptr [rax],00
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+a1
+
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+76: 49 BB A7 E0 9F 80 24 02 00 00  - mov r11,00000224809FE0A7
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+80: 41 FF D3                       - call r11
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+83: 48 8B 46 10                    - mov rax,[rsi+10]
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+87: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+8a: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+8d: 48 8B 48 10                    - mov rcx,[rax+10]
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+91: 48 8B C1                       - mov rax,rcx
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+94: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+97: 48 63 89 9C 01 00 00           - movsxd  rcx,dword ptr [rcx+0000019C]
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+9e: 89 4D F0                       - mov [rbp-10],ecx
+// ---------- INJECTING HERE ----------
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+a1: FF C9                          - dec ecx
+// ---------- DONE INJECTING  ----------
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+a3: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+a6: 89 88 9C 01 00 00              - mov [rax+0000019C],ecx
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+ac: 48 8B 46 10                    - mov rax,[rsi+10]
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+b0: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+b3: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+b6: 48 8B 40 30                    - mov rax,[rax+30]
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+ba: 48 8B 4E 10                    - mov rcx,[rsi+10]
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+be: 48 8B D1                       - mov rdx,rcx
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+c1: 83 3A 00                       - cmp dword ptr [rdx],00
+TheLastStand.Controller.Unit.Perk.UnitPerkTreeController:BuyPerk+c4: 48 8B 49 30                    - mov rcx,[rcx+30]
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26724</ID>
+              <Description>"indestructible buildings"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+8c)
+define(bytes,F3 0F 5A C0 F2 0F 5A E8)
+
+[ENABLE]
+address:
+  movss xmm5,[rax+2c] // load max health of building into xmm5
+  nop 3
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // cvtss2sd xmm0,xmm0
+  // cvtsd2ss xmm5,xmm0
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+8c
+
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+5d: F2 0F 5A C0                    - cvtsd2ss xmm0,xmm0
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+61: 48 8D 64 24 00                 - lea rsp,[rsp+00]
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+66: 49 BB 80 90 13 F6 B9 02 00 00  - mov r11,UnityEngine.Mathf:Clamp
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+70: 41 FF D3                       - call r11
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+73: F3 0F 5A C0                    - cvtss2sd xmm0,xmm0
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+77: 48 8B 45 D8                    - mov rax,[rbp-28]
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+7b: F2 0F 5A E8                    - cvtsd2ss xmm5,xmm0
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+7f: F3 0F 11 6D EC                 - movss [rbp-14],xmm5
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+84: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+87: F3 0F 10 45 EC                 - movss xmm0,[rbp-14]
+// ---------- INJECTING HERE ----------
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+8c: F3 0F 5A C0                    - cvtss2sd xmm0,xmm0
+// ---------- DONE INJECTING  ----------
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+90: F2 0F 5A E8                    - cvtsd2ss xmm5,xmm0
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+94: F3 0F 11 68 28                 - movss [rax+28],xmm5
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+99: 48 0F B6 C6                    - movzx rax,sil
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+9d: 85 C0                          - test eax,eax
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+9f: 0F 84 7E 00 00 00              - je TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+123
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+a5: 48 8B 47 10                    - mov rax,[rdi+10]
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+a9: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+ac: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+af: 48 8B 40 10                    - mov rax,[rax+10]
+TheLastStand.Controller.Building.Module.DamageableModuleController:SetHealth+b3: 48 8B C8                       - mov rcx,rax
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26727</ID>
+              <Description>"Set Panic to Zero"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>define(address,TheLastStand.Controller.Panic.PanicController:SetValue+df)
+define(bytes,F2 0F 5A E8)
+
+[ENABLE]
+address:
+  xorps xmm5,xmm5
+  nop
+[DISABLE]
+address:
+  db bytes
+  // cvtsd2ss xmm5,xmm0
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Controller.Panic.PanicController:SetValue+df
+
+TheLastStand.Controller.Panic.PanicController:SetValue+b3: F3 0F 5A C0        - cvtss2sd xmm0,xmm0
+TheLastStand.Controller.Panic.PanicController:SetValue+b7: F2 0F 5A E8        - cvtsd2ss xmm5,xmm0
+TheLastStand.Controller.Panic.PanicController:SetValue+bb: F3 0F 11 6D D8     - movss [rbp-28],xmm5
+TheLastStand.Controller.Panic.PanicController:SetValue+c0: F3 0F 10 45 D8     - movss xmm0,[rbp-28]
+TheLastStand.Controller.Panic.PanicController:SetValue+c5: F3 0F 5A C0        - cvtss2sd xmm0,xmm0
+TheLastStand.Controller.Panic.PanicController:SetValue+c9: F2 0F 5A E8        - cvtsd2ss xmm5,xmm0
+TheLastStand.Controller.Panic.PanicController:SetValue+cd: F3 0F 11 6D D8     - movss [rbp-28],xmm5
+TheLastStand.Controller.Panic.PanicController:SetValue+d2: 41 83 3E 00        - cmp dword ptr [r14],00
+TheLastStand.Controller.Panic.PanicController:SetValue+d6: F3 0F 10 45 D8     - movss xmm0,[rbp-28]
+TheLastStand.Controller.Panic.PanicController:SetValue+db: F3 0F 5A C0        - cvtss2sd xmm0,xmm0
+// ---------- INJECTING HERE ----------
+TheLastStand.Controller.Panic.PanicController:SetValue+df: F2 0F 5A E8        - cvtsd2ss xmm5,xmm0
+// ---------- DONE INJECTING  ----------
+TheLastStand.Controller.Panic.PanicController:SetValue+e3: F3 41 0F 11 6E 44  - movss [r14+44],xmm5
+TheLastStand.Controller.Panic.PanicController:SetValue+e9: 0F B6 45 C0        - movzx eax,byte ptr [rbp-40]
+TheLastStand.Controller.Panic.PanicController:SetValue+ed: 48 0F B6 C0        - movzx rax,al
+TheLastStand.Controller.Panic.PanicController:SetValue+f1: 40 88 45 E8        - mov [rbp-18],al
+TheLastStand.Controller.Panic.PanicController:SetValue+f5: 85 C0              - test eax,eax
+TheLastStand.Controller.Panic.PanicController:SetValue+f7: 0F 84 26 00 00 00  - je TheLastStand.Controller.Panic.PanicController:SetValue+123
+TheLastStand.Controller.Panic.PanicController:SetValue+fd: 48 8B 47 10        - mov rax,[rdi+10]
+TheLastStand.Controller.Panic.PanicController:SetValue+101: 48 8B C8           - mov rcx,rax
+TheLastStand.Controller.Panic.PanicController:SetValue+104: 83 39 00           - cmp dword ptr [rcx],00
+TheLastStand.Controller.Panic.PanicController:SetValue+107: 48 8B 40 38        - mov rax,[rax+38]
+}
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>26116</ID>
+          <Description>"Pointers"</Description>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>26511</ID>
+              <Description>"PlayableUnitDatabase"</Description>
+              <Options moHideChildren="1"/>
+              <ShowAsSigned>0</ShowAsSigned>
+              <GroupHeader>1</GroupHeader>
+              <Address>PlayableUnitDatabase</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>26512</ID>
+                  <Description>"Bonus Experience Per Kill"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>+8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26559</ID>
+              <Description>"Get Selected Unit"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{
+	Game	: The Last Spell.exe
+	Version	: 2018.4.30.39072
+	Date	: 2021-07-25
+	Author	: aSwedishMagyar
+}
+//Unique AOB: 55 48 8B EC 48 81 EC 80 00 00 00 48 89 75 E8 48 89 7D F0 4C 89 7D F8 48 8B F1 48 8B
+define(getUnitPortraitView,TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait)
+define(getUnitPortraitViewBytes,55 48 8B EC 48 81 EC 90 00 00 00)
+
+[ENABLE]
+assert(getUnitPortraitView,getUnitPortraitViewBytes)
+registersymbol(getUnitPortraitViewfunc)
+registersymbol(baseUnitPortraitView)
+alloc(getUnitPortraitViewfunc,100,getUnitPortraitView)
+label(codegetUnitPortraitView)
+label(baseUnitPortraitView)
+label(returnAddr)
+
+getUnitPortraitViewfunc:
+    pop [returnAddr]
+	mov [baseUnitPortraitView],rcx
+
+codegetUnitPortraitView:
+	db getUnitPortraitViewBytes
+	jmp qword ptr [returnAddr]
+
+returnAddr:
+  dq 0
+
+baseUnitPortraitView:
+  dq 0
+
+getUnitPortraitView:
+	call getUnitPortraitViewfunc
+	nop 6
+
+[DISABLE]
+getUnitPortraitView:
+	db getUnitPortraitViewBytes
+
+unregistersymbol(getUnitPortraitViewfunc)
+unregistersymbol(baseUnitPortraitView)
+dealloc(getUnitPortraitViewfunc)
+
+{
+// ---------- INJECTING HERE ----------
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait: 55                             - push rbp
+// ---------- DONE INJECTING  ----------
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+1: 48 8B EC                       - mov rbp,rsp
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+4: 48 81 EC 80 00 00 00           - sub rsp,00000080
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+b: 48 89 75 E8                    - mov [rbp-18],rsi
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+f: 48 89 7D F0                    - mov [rbp-10],rdi
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+13: 4C 89 7D F8                    - mov [rbp-08],r15
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+17: 48 8B F1                       - mov rsi,rcx
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+1a: 48 8B 46 38                    - mov rax,[rsi+38]
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+1e: 48 8B 4E 60                    - mov rcx,[rsi+60]
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+22: 48 85 C9                       - test rcx,rcx
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+25: 40 0F 97 C2                    - seta dl
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+29: 48 0F B6 D2                    - movzx rdx,dl
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+2d: 48 8B C8                       - mov rcx,rax
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+30: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+33: 66 66 90                       - nop 3
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+36: 49 BB 40 3D 77 0B 66 01 00 00  - mov r11,UnityEngine:Behaviour:set_enabled
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+40: 41 FF D3                       - call r11
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+43: 48 8B 46 48                    - mov rax,[rsi+48]
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+47: 48 8B 4E 60                    - mov rcx,[rsi+60]
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+4b: 48 85 C9                       - test rcx,rcx
+TheLastStand.View.Unit:UnitPortraitView:RefreshPortrait+4e: 40 0F 97 C2                    - seta dl
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>26600</ID>
+                  <Description>"PlayableUnit"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <GroupHeader>1</GroupHeader>
+                  <Address>baseUnitPortraitView</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>60</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>26607</ID>
+                      <Description>"Name"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>String</VariableType>
+                      <Length>100</Length>
+                      <Unicode>1</Unicode>
+                      <CodePage>0</CodePage>
+                      <ZeroTerminate>1</ZeroTerminate>
+                      <Address>+118</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26695</ID>
+                      <Description>"Stats of Character  - BASE values (UnitStats)"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <GroupHeader>1</GroupHeader>
+                      <Address>+70</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>18</Offset>
+                        <Offset>10</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>26717</ID>
+                          <Description>"Maximum Health"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+30</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26698</ID>
+                          <Description>"Current Health"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>+60</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26697</ID>
+                          <Description>"Health Regeneration"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+48</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26699</ID>
+                          <Description>"Mana Maximum"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+78</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26700</ID>
+                          <Description>"Mana Regeneration"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+90</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26714</ID>
+                          <Description>"Current Mana"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>FF0000</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>+a8</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26702</ID>
+                          <Description>"Movement Points max"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+c0</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26703</ID>
+                          <Description>"Movement Points Current"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>008000</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>+d8</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26704</ID>
+                          <Description>"?"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+f0</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26715</ID>
+                          <Description>"?"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+108</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26716</ID>
+                          <Description>"?"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+120</Address>
+                          <Offsets>
+                            <Offset>34</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26561</ID>
+                      <Description>"BaseStats  &lt;&lt; can not find the new offsets like aSwedishMagyar did :("</Description>
+                      <Options moHideChildren="1"/>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>C0C0C0</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <Address>+70</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>26601</ID>
+                          <Description>"Health"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26583</ID>
+                              <Description>"Healing Received"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+15C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26575</ID>
+                              <Description>"Current"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+DC</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26562</ID>
+                              <Description>"Max"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26573</ID>
+                              <Description>"Regen"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+BC</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26602</ID>
+                          <Description>"Mana"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26578</ID>
+                              <Description>"Current"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+10C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26563</ID>
+                              <Description>"Base Max"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+1C</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26603</ID>
+                          <Description>"Damage"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26565</ID>
+                              <Description>"Physical"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+3C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26567</ID>
+                              <Description>"Magic"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+5C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26586</ID>
+                              <Description>"Damage"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+18C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26566</ID>
+                              <Description>"Ranged"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+4C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26597</ID>
+                              <Description>"Poison"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+23C</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26605</ID>
+                          <Description>"Armor"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26577</ID>
+                              <Description>"Current"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+FC</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26576</ID>
+                              <Description>"Max"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+EC</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26604</ID>
+                          <Description>"Block"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26570</ID>
+                              <Description>"Current"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+8C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26581</ID>
+                              <Description>"Max"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+13C</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26606</ID>
+                          <Description>"Critical"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26569</ID>
+                              <Description>"Base"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+7C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26582</ID>
+                              <Description>"Power"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+14C</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26608</ID>
+                          <Description>"Propagation"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26590</ID>
+                              <Description>"Bounces"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+1CC</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26591</ID>
+                              <Description>"Damage"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+1DC</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26579</ID>
+                          <Description>"Action Points"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+11C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26568</ID>
+                          <Description>"Dodge Base"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+6C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26585</ID>
+                          <Description>"Experience Gain"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+17C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26572</ID>
+                          <Description>"Resistance"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+AC</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26609</ID>
+                          <Description>"Movement Points"</Description>
+                          <Options moHideChildren="1"/>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>26580</ID>
+                              <Description>"Current"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+12C</Address>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>26564</ID>
+                              <Description>"Base Max"</Description>
+                              <VariableType>Float</VariableType>
+                              <Address>+2C</Address>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26584</ID>
+                          <Description>"Skill Range"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+16C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26587</ID>
+                          <Description>"Reliability"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+19C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26588</ID>
+                          <Description>"Base Accuracy"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+1AC</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26589</ID>
+                          <Description>"Stun Chance"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+1BC</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26592</ID>
+                          <Description>"Resistance Reduction"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+1EC</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26593</ID>
+                          <Description>"Momentum"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+1FC</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26594</ID>
+                          <Description>"Opportunistic"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+20C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>26595</ID>
+                          <Description>"Isolated"</Description>
+                          <VariableType>Float</VariableType>
+                          <Address>+21C</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26658</ID>
+                      <Description>"Experience"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Float</VariableType>
+                      <Address>+178</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26659</ID>
+                      <Description>"ExperienceInCurrentLevel"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Float</VariableType>
+                      <Address>+17C</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26660</ID>
+                      <Description>"ExperienceNeededToNextLevel"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Float</VariableType>
+                      <Address>+180</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26689</ID>
+                      <Description>"&lt;Level&gt;k__BackingField"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Double</VariableType>
+                      <Address>+190</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26663</ID>
+                      <Description>"&lt;MovedThisDay&gt;k__BackingField"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Byte</VariableType>
+                      <Address>+198</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>26664</ID>
+                      <Description>"PerksPoints"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+19c</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>114984</ID>
+      <Description>"Get Selected Unit"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : The Last Spell.exe
+  Version:
+  Date   : 2023-04-13
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,89 48 40 48 8B 46 18 48) // should be unique
+alloc(newmem,$1000,INJECT)
+
+alloc(skill_cooldown,8)
+
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [skill_cooldown], rax
+  mov [rax+40],ecx
+  mov rax,[rsi+18]
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(INJECT)
+registersymbol(skill_cooldown)
+
+[DISABLE]
+
+INJECT:
+  db 89 48 40 48 8B 46 18
+
+unregistersymbol(skill_cooldown)
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c2
+
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+a2: 48 8B 46 18                    - mov rax,[rsi+18]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+a6: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+a9: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+ac: 48 8B 40 60                    - mov rax,[rax+60]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+b0: 48 8B D0                       - mov rdx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+b3: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+b6: 48 63 48 40                    - movsxd  rcx,dword ptr [rax+40]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+ba: 89 4D B0                       - mov [rbp-50],ecx
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+bd: FF C9                          - dec ecx
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+bf: 83 3A 00                       - cmp dword ptr [rdx],00
+// ---------- INJECTING HERE ----------
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c2: 89 48 40                       - mov [rax+40],ecx
+// ---------- DONE INJECTING  ----------
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c5: 48 8B 46 18                    - mov rax,[rsi+18]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c9: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+cc: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+cf: 48 8B 40 20                    - mov rax,[rax+20]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+d3: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+d6: 48 8B 00                       - mov rax,[rax]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+d9: 49 BA 40 8C D5 4F 68 01 00 00  - mov r10,000001684FD58C40
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+e3: FF 90 68 FF FF FF              - call qword ptr [rax-00000098]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+e9: 48 8B 4E 18                    - mov rcx,[rsi+18]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+ed: 48 8B D1                       - mov rdx,rcx
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>114986</ID>
+          <Description>"skill remain num"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[skill_cooldown] + 40</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>114987</ID>
+      <Description>"No description"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Array of byte</VariableType>
+      <ByteLength>8</ByteLength>
+      <Address>1BBF341C5D2</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>114988</ID>
+      <Description>"no skill dec"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : The Last Spell.exe
+  Version:
+  Date   : 2023-04-13
+  Author : JasonHong
+
+  This script does blah blah blah
+}
+
+define(address,TheLastStand.Controller.Skill..SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c2)
+define(bytes,89 48 40)
+
+[ENABLE]
+assert(address,bytes)
+
+address:
+  nop
+  nop
+  nop
+
+[DISABLE]
+
+address:
+  db bytes
+
+{
+// ORIGINAL CODE - INJECTION POINT: TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c2
+
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+a2: 48 8B 46 18                    - mov rax,[rsi+18]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+a6: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+a9: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+ac: 48 8B 40 60                    - mov rax,[rax+60]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+b0: 48 8B D0                       - mov rdx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+b3: 83 38 00                       - cmp dword ptr [rax],00
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+b6: 48 63 48 40                    - movsxd  rcx,dword ptr [rax+40]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+ba: 89 4D B0                       - mov [rbp-50],ecx
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+bd: FF C9                          - dec ecx
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+bf: 83 3A 00                       - cmp dword ptr [rdx],00
+// ---------- INJECTING HERE ----------
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c2: 89 48 40                       - mov [rax+40],ecx
+// ---------- DONE INJECTING  ----------
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c5: 48 8B 46 18                    - mov rax,[rsi+18]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+c9: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+cc: 83 39 00                       - cmp dword ptr [rcx],00
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+cf: 48 8B 40 20                    - mov rax,[rax+20]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+d3: 48 8B C8                       - mov rcx,rax
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+d6: 48 8B 00                       - mov rax,[rax]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+d9: 49 BA 40 8C D5 4F 68 01 00 00  - mov r10,000001684FD58C40
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+e3: FF 90 68 FF FF FF              - call qword ptr [rax-00000098]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+e9: 48 8B 4E 18                    - mov rcx,[rsi+18]
+TheLastStand.Controller.Skill.SkillAction.SkillActionExecution.SkillActionExecutionController:ExecuteSkill+ed: 48 8B D1                       - mov rdx,rcx
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>ScreenShake</Name>
+      <Address>26EEFD72C10</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Structures StructVersion="2">
+    <Structure Name="PlayableUnitStat" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="&lt;ChildStat&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="&lt;ParentStat&gt;k__BackingField" DisplayMethod="unsigned integer">
+          <Structure Name="PlayableUnitStat" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="&lt;ChildStat&gt;k__BackingField" DisplayMethod="unsigned integer">
+                <Structure Name="PlayableUnitStat" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="&lt;ChildStat&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="&lt;ParentStat&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="&lt;UnitStatsController&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="&lt;Boundaries&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="&lt;StatId&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="52" Vartype="Float" Bytesize="4" OffsetHex="00000034" Description="&lt;Base&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="56" Vartype="Float" Bytesize="4" OffsetHex="00000038" Description="&lt;Injuries&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="60" Vartype="Float" Bytesize="4" OffsetHex="0000003C" Description="&lt;InjuriesStatuses&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="64" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000040" Description="&lt;InjuriesValueMultiplier&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="68" Vartype="Float" Bytesize="4" OffsetHex="00000044" Description="&lt;Status&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="&lt;PerkStatModifierEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="&lt;PerkDynamicStatsModifierEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="&lt;PerkGaugeModules&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="96" Vartype="Float" Bytesize="4" OffsetHex="00000060" Description="&lt;Equipment&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="100" Vartype="Float" Bytesize="4" OffsetHex="00000064" Description="perks" DisplayMethod="unsigned integer"/>
+                    <Element Offset="104" Vartype="Float" Bytesize="4" OffsetHex="00000068" Description="&lt;Traits&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                    <Element Offset="108" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000006C" Description="&lt;PerkLocksBuffer&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="24" Vartype="Pointer" Bytesize="8" OffsetHex="00000018" Description="&lt;ParentStat&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="&lt;UnitStatsController&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="&lt;Boundaries&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="&lt;StatId&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="52" Vartype="Float" Bytesize="4" OffsetHex="00000034" Description="&lt;Base&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="56" Vartype="Float" Bytesize="4" OffsetHex="00000038" Description="&lt;Injuries&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="60" Vartype="Float" Bytesize="4" OffsetHex="0000003C" Description="&lt;InjuriesStatuses&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="64" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000040" Description="&lt;InjuriesValueMultiplier&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="68" Vartype="Float" Bytesize="4" OffsetHex="00000044" Description="&lt;Status&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="&lt;PerkStatModifierEffects&gt;k__BackingField" DisplayMethod="unsigned integer">
+                <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+                  <Elements>
+                    <Element Offset="16" Vartype="Pointer" Bytesize="8" OffsetHex="00000010" Description="_items" DisplayMethod="unsigned integer"/>
+                    <Element Offset="24" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000018" Description="_size" DisplayMethod="unsigned integer"/>
+                    <Element Offset="28" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000001C" Description="_version" DisplayMethod="unsigned integer"/>
+                    <Element Offset="32" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000020" Description="_syncRoot" DisplayMethod="unsigned integer"/>
+                  </Elements>
+                </Structure>
+              </Element>
+              <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="&lt;PerkDynamicStatsModifierEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="&lt;PerkGaugeModules&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="96" Vartype="Float" Bytesize="4" OffsetHex="00000060" Description="&lt;Equipment&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="100" Vartype="Float" Bytesize="4" OffsetHex="00000064" Description="perks" DisplayMethod="unsigned integer"/>
+              <Element Offset="104" Vartype="Float" Bytesize="4" OffsetHex="00000068" Description="&lt;Traits&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+              <Element Offset="108" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000006C" Description="&lt;PerkLocksBuffer&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" OffsetHex="00000020" Description="&lt;UnitStatsController&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="40" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000028" Description="&lt;Boundaries&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="48" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000030" Description="&lt;StatId&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="52" Vartype="Float" Bytesize="4" OffsetHex="00000034" Description="&lt;Base&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="56" Vartype="Float" Bytesize="4" OffsetHex="00000038" Description="&lt;Injuries&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="60" Vartype="Float" Bytesize="4" OffsetHex="0000003C" Description="&lt;InjuriesStatuses&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="64" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000040" Description="&lt;InjuriesValueMultiplier&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="68" Vartype="Float" Bytesize="4" OffsetHex="00000044" Description="&lt;Status&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" OffsetHex="00000048" Description="&lt;PerkStatModifierEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" OffsetHex="00000050" Description="&lt;PerkDynamicStatsModifierEffects&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="8" OffsetHex="00000058" Description="&lt;PerkGaugeModules&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="96" Vartype="Float" Bytesize="4" OffsetHex="00000060" Description="&lt;Equipment&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="100" Vartype="Float" Bytesize="4" OffsetHex="00000064" Description="perks" DisplayMethod="unsigned integer"/>
+        <Element Offset="104" Vartype="Float" Bytesize="4" OffsetHex="00000068" Description="&lt;Traits&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+        <Element Offset="108" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000006C" Description="&lt;PerkLocksBuffer&gt;k__BackingField" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+</CheatTable>
