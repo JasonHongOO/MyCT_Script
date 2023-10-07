@@ -4,19 +4,23 @@
 
 # CT腳本範例展示
 
+![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/1.PNG)
+
 # 使用方式
 
-### 打開 Cheat Engine 並選擇遊戲進程
+#### 打開 Cheat Engine 並選擇遊戲進程
+![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/2.PNG)
 
+#### 點擊  Value 顯示為 script 的那一列最左側的方框，就能成功 Injection 腳本到遊戲程式中
 
+(原先)
+![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/3.PNG)
 
-### 點擊  Value 顯示為 script 的那一列最左側的方框，就能成功 Injection 腳本到遊戲程式中
-
-原先
-
-之後
+(之後)
+![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/4.PNG)
 
 #### 如有特殊需求，想要修改腳本內容只要雙擊 script 的字串，就能修改腳本的組合語言
+![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/5.PNG)
 
 # 提醒
 
