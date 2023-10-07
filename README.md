@@ -1,7 +1,7 @@
 # MyCT_Script
 
-以上為本人經過淺層且簡單的遊戲逆向工程寫出的AOB腳本，為了實現 Code Injection 以修改遊戲機制或獲取的遊戲物件
-CT 腳本為 Cheat Engine 使用的程式，之所以將AOB腳本包成CT腳本是為了方便不懂城市的人也可以輕鬆使用，同時也達成開放Source Code 的目的，讓有志人士能在事後遊戲更新後，方便直接跟新腳本。
+###### 以上為本人經過淺層且簡單的遊戲逆向工程寫出的AOB腳本，為了實現 Code Injection 以修改遊戲機制或獲取的遊戲物件
+###### CT 腳本為 Cheat Engine 使用的程式，之所以將AOB腳本包成CT腳本是為了方便不懂城市的人也可以輕鬆使用，同時也達成開放Source Code 的目的，讓有志人士能在事後遊戲更新後，方便直接跟新腳本。
 
 # CT腳本範例展示
 
@@ -14,10 +14,10 @@ CT 腳本為 Cheat Engine 使用的程式，之所以將AOB腳本包成CT腳本�
 
 #### 點擊  Value 顯示為 script 的那一列最左側的方框，就能成功 Injection 腳本到遊戲程式中
 
-(原先)
+###### (原先)
 ![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/3.PNG)
 
-(之後)
+###### (之後)
 ![image](https://github.com/JasonHongOO/MyCT_Script/blob/main/Images/4.PNG)
 
 #### 如有特殊需求，想要修改腳本內容只要雙擊 script 的字串，就能修改腳本的組合語言
