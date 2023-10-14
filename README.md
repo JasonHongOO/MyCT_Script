@@ -33,12 +33,12 @@ CT 腳本為 Cheat Engine 使用的程式，之所以將AOB腳本包成CT腳本�
 有些遊戲會偵測電腦是否有開啟 Cheat Engine，如果有類似狀況發生，需先完整開啟遊戲後，在開啟 Cheat Engine。
 
 # 使用的相關逆向工程軟體
-###### 一般軟體
+#### 一般軟體
 - Dnspy
 - IDA Pro
 - Cheat Engine
 
-###### 開源軟體
+#### 開源軟體
 - minhook (https://github.com/TsudaKageyu/minhook)
 - Il2CppDumper-GUI (https://github.com/AndnixSH/Il2CppDumper-GUI)
 - ProcessHacker (https://github.com/PKRoma/ProcessHacker)
